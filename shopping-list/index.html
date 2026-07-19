@@ -176,6 +176,11 @@ body{font-family:var(--font);
 <style>
   /* Keyboard-only focus - mouse users never see this */
   :focus-visible { outline: 3px solid #4F46E5 !important; outline-offset: 2px !important; border-radius: 4px; }
+  /* text fields use their own green focus ring (keeps ₪ visible), not the indigo box */
+  .big-input input:focus, .big-input input:focus-visible,
+  .amt input:focus, .amt input:focus-visible,
+  .amtmini input:focus, .amtmini input:focus-visible,
+  .it-name-in:focus, .it-name-in:focus-visible { outline: none !important; }
   /* Skip link - visible only on keyboard focus */
   .brain-skip { position: fixed; top: -60px; right: 12px; z-index: 100000; background: #1E1B4B; color: #fff;
     padding: 10px 18px; border-radius: 10px; font-size: 15px; text-decoration: none; transition: top .15s; }
