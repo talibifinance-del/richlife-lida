@@ -83,19 +83,35 @@ body{font-family:var(--font);
 .basket-sub b{color:var(--pine-deep);font-weight:800}
 .basket.basic .perks-list li b{color:var(--pine-deep)}
 .basket.plus .perks-list li b{color:var(--pine-darker)}
-/* timeline phases */
-.phase{border-radius:14px;padding:14px 15px;margin-bottom:13px;border:1.5px solid rgba(var(--pine-rgb),.20)}
-.phase.before{background:linear-gradient(180deg,rgba(var(--sage-rgb),.16),rgba(var(--sage-rgb),.04))}
-.phase.during{background:#fff;border-color:rgba(var(--pine-rgb),.30);box-shadow:0 6px 18px rgba(var(--pine-rgb),.09)}
-.phase.after{background:linear-gradient(180deg,rgba(var(--sage-rgb),.26),rgba(var(--sage-rgb),.07))}
-.phase-head{display:flex;align-items:center;gap:9px;margin-bottom:4px;flex-wrap:wrap}
-.phase-head .pn{font-size:15.5px;font-weight:900;color:var(--pine-darker)}
-.phase-head .pt{font-size:11px;font-weight:800;color:var(--pine-deep);background:rgba(var(--pine-rgb),.10);padding:3px 10px;border-radius:100px;margin-inline-start:auto;white-space:nowrap}
-.phase-sub{font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:12px;line-height:1.5}
-.perks-list li .pill{display:inline-block;font-size:10px;font-weight:800;padding:2px 8px;border-radius:100px;white-space:nowrap;vertical-align:middle;margin-inline-start:5px;position:static}
-.pill.b{background:var(--pine);color:#fff}
-.pill.bs{background:rgba(var(--pine-rgb),.13);color:var(--pine-deep);border:1px solid rgba(var(--pine-rgb),.30)}
-.pill.p{background:rgba(var(--red-rgb),.12);color:#8f3a29;border:1px solid rgba(var(--red-rgb),.30)}
+/* legend */
+.lgd{display:inline-block;font-size:11px;font-weight:900;padding:3px 9px;border-radius:8px;white-space:nowrap}
+.lgd.free{background:var(--pine);color:#fff}
+.lgd.plus{background:rgba(var(--red-rgb),.12);color:#8f3a29;border:1.5px solid rgba(var(--red-rgb),.35)}
+/* timeline phases — collapsible accordions */
+.ph{border-radius:14px;margin-bottom:10px;border:1.5px solid rgba(var(--pine-rgb),.20);overflow:hidden;background:#fff}
+.ph[open]{box-shadow:0 8px 22px rgba(var(--pine-rgb),.10)}
+.ph>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:flex-start;gap:10px;padding:14px 15px}
+.ph>summary::-webkit-details-marker{display:none}
+.ph.before>summary{background:linear-gradient(180deg,rgba(var(--sage-rgb),.20),rgba(var(--sage-rgb),.06))}
+.ph.during>summary{background:linear-gradient(180deg,rgba(var(--sage-rgb),.12),#fff)}
+.ph.after>summary{background:linear-gradient(180deg,rgba(var(--sage-rgb),.28),rgba(var(--sage-rgb),.09))}
+.ph-ic{font-size:20px;flex:none}
+.ph-nm{font-size:15.5px;font-weight:900;color:var(--pine-darker)}
+.ph-cnt{font-size:11px;font-weight:800;color:var(--pine-deep);background:rgba(var(--pine-rgb),.12);padding:3px 9px;border-radius:100px;white-space:nowrap}
+.ph-chev{margin-inline-start:auto;font-size:13px;color:var(--ink-soft);transition:transform .25s;flex:none}
+.ph[open] .ph-chev{transform:rotate(180deg)}
+.ph-body{padding:2px 14px 12px}
+.ph-sub{font-size:12px;font-weight:600;color:var(--ink-soft);margin:9px 0 6px;line-height:1.5}
+/* entitlement rows — aligned status column, 2 categories */
+.ent{display:flex;align-items:center;gap:11px;padding:11px 2px;border-bottom:1px solid rgba(var(--pine-rgb),.12)}
+.ent:last-child{border-bottom:none}
+.ent-ic{font-size:18px;flex:none}
+.ent-tx{flex:1;font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.45;min-width:0}
+.ent-tx .nm{font-weight:800;color:var(--pine-darker)}
+.ent-tx .co{color:var(--ink-soft)}
+.ent-bg{flex:none;width:96px;text-align:center;font-size:11px;font-weight:900;padding:7px 5px;border-radius:10px;white-space:nowrap;line-height:1.15}
+.ent-bg.free{background:var(--pine);color:#fff}
+.ent-bg.plus{background:rgba(var(--red-rgb),.12);color:#8f3a29;border:1.5px solid rgba(var(--red-rgb),.35)}
 
 .exp{background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(var(--pine-rgb),.10);padding:16px;margin-top:14px}
 .exp-top{display:flex;align-items:center;gap:9px;margin-bottom:12px}
@@ -337,49 +353,49 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   <details class="perks" open>
     <summary><span>💎 מה מגיע לכם שאולי לא ידעתם - לפי שלבים</span><span class="chev">▾</span></summary>
     <div class="perks-body">
-      <div class="perks-intro">מסודר לפי ציר הזמן: <b>לפני</b> · <b>במהלך</b> · <b>אחרי הלידה</b>. ליד כל פריט מסומן איפה הוא יושב - <span class="pill b">בסל</span> מגיע לכולן חינם, <span class="pill bs">בסל · השתתפות</span> בסל עם תשלום חלקי, <span class="pill p">משלים</span> רק לבעלות ביטוח משלים ותלוי בקופה.</div>
+      <div class="perks-intro"><b>הצבע אומר הכל:</b> <span class="lgd free">בסל</span> מגיע לך בכל מקרה (לפעמים בתשלום סמלי) · <span class="lgd plus">משלים</span> רק אם יש לך ביטוח משלים, ותלוי בקופה. לחצו על כל שלב כדי לפתוח.</div>
 
-      <div class="phase before">
-        <div class="phase-head"><span class="pn">🌱 לפני ההיריון</span><span class="pt">בזמן התכנון</span></div>
-        <div class="phase-sub">כדאי להתחיל עוד לפני שני הקווים - כמה דברים חשובים (וחינמיים) שווה לעשות מראש.</div>
-        <ul class="perks-list">
-          <li><span class="e">🧬</span><b>סקר גנטי לגילוי נשאות</b> - הסקר המורחב האחיד <b>חינם בסל</b> לכל אחת, מומלץ לפני היריון או בתחילתו. שונה מבדיקות גנטיות של העובר בהריון (ראו בשלב הבא). <span class="pill b">בסל · חינם</span></li>
-          <li><span class="e">💊</span><b>חומצה פולית</b> - מומלץ להתחיל כ-3 חודשים לפני הכניסה להיריון ועד שבוע 12. תוסף זול בקנייה חופשית. <span class="pill bs">זמין וזול</span></li>
-          <li><span class="e">🩺</span><b>ייעוץ ובדיקות טרום-היריון</b> - חיסוניות (אדמת), בלוטת התריס, סוכר וגורמי סיכון, אצל רופא/ת הקופה. <span class="pill b">בסל</span></li>
-        </ul>
-      </div>
+      <details class="ph before">
+        <summary><span class="ph-ic">🌱</span><span class="ph-nm">לפני ההיריון</span><span class="ph-cnt">3 הטבות</span><span class="ph-chev">▾</span></summary>
+        <div class="ph-body">
+          <div class="ph-sub">כדאי להתחיל עוד לפני שני הקווים - כמה דברים חשובים (וחינמיים) שווה לעשות מראש.</div>
+          <div class="ent"><span class="ent-ic">🧬</span><span class="ent-tx"><span class="nm">סקר גנטי לגילוי נשאות</span> - הסקר המורחב, חינם לכל אחת. <span class="co">שונה מבדיקות גנטיות של העובר (ראו בשלב הבא).</span></span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">💊</span><span class="ent-tx"><span class="nm">חומצה פולית</span> - מומלץ כ-3 חודשים לפני ההיריון ועד שבוע 12. <span class="co">תוסף זול בקנייה חופשית.</span></span><span class="ent-bg free">זמין וזול</span></div>
+          <div class="ent"><span class="ent-ic">🩺</span><span class="ent-tx"><span class="nm">ייעוץ ובדיקות טרום-היריון</span> - חיסוניות, בלוטת התריס, סוכר וגורמי סיכון אצל רופא/ת הקופה.</span><span class="ent-bg free">בסל</span></div>
+        </div>
+      </details>
 
-      <div class="phase during">
-        <div class="phase-head"><span class="pn">🤰 במהלך ההיריון</span><span class="pt">9 החודשים</span></div>
-        <div class="phase-sub">רוב המעקב הרפואי חינם בסל. חלק מהבדיקות המתקדמות והליווי (דולה, קורס לידה) הם במשלים.</div>
-        <ul class="perks-list">
-          <li><span class="e">🩺</span><b>מעקב היריון שגרתי</b> - בדיקות דם, שתן, לחץ דם וסוכר לכל אורך ההריון, אצל רופא/ת הקופה. <span class="pill b">בסל · חינם</span></li>
-          <li><span class="e">🖥️</span><b>סקירת מערכות</b> (שבועות 19-24) - אולטרסאונד מפורט של איברי העובר. <span class="pill b">בסל</span></li>
-          <li><span class="e">🔎</span><b>שקיפות עורפית + סקר ביוכימי</b> - חישוב סיכון לתסמונת דאון. בסל עם השתתפות עצמית חלקית. <span class="pill bs">בסל · השתתפות</span></li>
-          <li><span class="e">🧬</span><b>בדיקות גנטיות של העובר</b> - NIPT (דנ"א עוברי מדם האם) לרוב <b>פרטית</b>, חלק מהמשלימים מחזירים חלקית; מי שפיר בהתוויה רפואית או מגיל 35 בסל. <span class="pill p">משלים / פרטי</span></li>
-          <li><span class="e">📘</span><b>קורס / סדנת הכנה ללידה</b> - <b>לא בסל.</b> הקופה מפעילה סדנה משלה בהשתתפות עצמית, או מחזירה חלק מקורס פרטי. <span class="pill p">משלים</span></li>
-          <li><span class="e">🤝</span><b>ליווי דולה ללידה</b> - מלווה אישית להריון וללידה. רק במשלים ובהחזר חלקי - הרבה זוגות משלמים מהכיס בלי לדעת. <span class="pill p">משלים</span></li>
-          <li><span class="e">🥗</span><b>ייעוץ תזונתי</b> - בסל אם יש סיבה רפואית (כמו סוכרת היריון); אחרת דרך המשלים. <span class="pill bs">בסל בהתוויה / משלים</span></li>
-          <li><span class="e">🕐</span><b>עד 40 שעות היעדרות בתשלום</b> לבדיקות היריון - זכות לפי חוק עבודת נשים (20 שעות למשרה חלקית). <span class="pill b">זכות בחוק</span></li>
-        </ul>
-      </div>
+      <details class="ph during">
+        <summary><span class="ph-ic">🤰</span><span class="ph-nm">במהלך ההיריון</span><span class="ph-cnt">8 הטבות</span><span class="ph-chev">▾</span></summary>
+        <div class="ph-body">
+          <div class="ph-sub">רוב המעקב הרפואי חינם בסל. חלק מהבדיקות המתקדמות והליווי (דולה, קורס לידה) הם במשלים.</div>
+          <div class="ent"><span class="ent-ic">🩺</span><span class="ent-tx"><span class="nm">מעקב היריון שגרתי</span> - בדיקות דם, שתן, לחץ דם וסוכר לכל אורך ההריון.</span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🖥️</span><span class="ent-tx"><span class="nm">סקירת מערכות</span> (שבועות 19-24) - אולטרסאונד מפורט של איברי העובר.</span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🔎</span><span class="ent-tx"><span class="nm">שקיפות עורפית + סקר ביוכימי</span> - חישוב סיכון לתסמונת דאון. <span class="co">בהשתתפות עצמית קטנה.</span></span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🧬</span><span class="ent-tx"><span class="nm">בדיקות גנטיות של העובר</span> - NIPT לרוב פרטית, חלק מהמשלימים מחזירים; מי שפיר בהתוויה או מגיל 35 בסל.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">📘</span><span class="ent-tx"><span class="nm">קורס / סדנת הכנה ללידה</span> - הקופה מפעילה סדנה בהשתתפות עצמית, או מחזירה חלק מקורס פרטי.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🤝</span><span class="ent-tx"><span class="nm">ליווי דולה ללידה</span> - מלווה אישית להריון וללידה, בהחזר חלקי. הרבה זוגות משלמים בלי לדעת.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🥗</span><span class="ent-tx"><span class="nm">ייעוץ תזונתי</span> - <span class="co">בסל אם יש סיבה רפואית (כמו סוכרת היריון); אחרת דרך המשלים.</span></span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🕐</span><span class="ent-tx"><span class="nm">עד 40 שעות היעדרות בתשלום</span> לבדיקות היריון - חוק עבודת נשים (20 שעות למשרה חלקית).</span><span class="ent-bg free">זכות בחוק</span></div>
+        </div>
+      </details>
 
-      <div class="phase after">
-        <div class="phase-head"><span class="pn">👶 לאחר הלידה</span><span class="pt">החודשים הראשונים</span></div>
-        <div class="phase-sub">כאן מסתתר האוצר שרוב הנשים לא מנצלות - סדנאות וליווי בהשתתפות עצמית קטנה, רובם במשלים.</div>
-        <ul class="perks-list">
-          <li><span class="e">🎁</span><b>מענק לידה + מענק אשפוז</b> מביטוח לאומי - אוטומטי, לא תלוי בקופה. <span class="pill b">אוטומטי</span></li>
-          <li><span class="e">👶</span><b>טיפת חלב</b> - מעקב, חיסונים ובדיקות סקר לתינוק/ת עד גיל 6, ואפילו לא תלוי בחברות בקופה. <span class="pill b">בסל · חינם</span></li>
-          <li><span class="e">🤱</span><b>ייעוץ הנקה</b> - יועצת מוסמכת. ייעוץ טלפוני וביקור מרפאה לרוב ללא עלות; ביקורי בית בהשתתפות עצמית. <span class="pill p">משלים</span></li>
-          <li><span class="e">💆</span><b>סדנת עיסוי תינוקות</b> - כ-5 מפגשים למגע וחיזוק הקשר עם התינוק/ת, עד גיל חצי שנה. בהשתתפות עצמית נמוכה. <span class="pill p">משלים</span></li>
-          <li><span class="e">🚑</span><b>סדנת החייאת תינוקות</b> - מפגש עם מדריך/ת מד"א: עזרה ראשונה והחייאה לתינוקות. עולה שקלים בודדים - שווה זהב. <span class="pill p">משלים</span></li>
-          <li><span class="e">🌙</span><b>ייעוץ שינה / אחות מלווה</b> - ליווי להסדרת שינת התינוק/ת, או אחות לביקור בית בשבועות הראשונים. <span class="pill p">משלים</span></li>
-          <li><span class="e">🏨</span><b>ימי החלמה / מלונית</b> - כמה לילות מנוחה והחלמה עם התינוק/ת, בהשתתפות הקופה. ההטבה שהכי מעטות מכירות. <span class="pill p">משלים</span></li>
-          <li><span class="e">🤸</span><b>התעמלות לאחר לידה</b> - חזרה לכושר וחיזוק, עד שנה מהלידה, במחיר מסובסד. <span class="pill p">משלים</span></li>
-          <li><span class="e">🩹</span><b>פיזיותרפיה לרצפת האגן</b> - טיפול בבריחת שתן/כאב אחרי לידה, בסל בהפניה רפואית מתאימה. <span class="pill bs">בסל בהתוויה</span></li>
-          <li><span class="e">🍼</span><b>משאבת חלב וציוד הנקה</b> - משאבות, חזיות ופדים במחיר מסובסד בבתי המרקחת של הקופה. <span class="pill p">משלים</span></li>
-        </ul>
-      </div>
+      <details class="ph after">
+        <summary><span class="ph-ic">👶</span><span class="ph-nm">לאחר הלידה</span><span class="ph-cnt">10 הטבות</span><span class="ph-chev">▾</span></summary>
+        <div class="ph-body">
+          <div class="ph-sub">כאן מסתתר האוצר שרוב הנשים לא מנצלות - סדנאות וליווי בהשתתפות עצמית קטנה, רובם במשלים.</div>
+          <div class="ent"><span class="ent-ic">🎁</span><span class="ent-tx"><span class="nm">מענק לידה + מענק אשפוז</span> - אוטומטי מביטוח לאומי, לא תלוי בקופה.</span><span class="ent-bg free">ביטוח לאומי</span></div>
+          <div class="ent"><span class="ent-ic">👶</span><span class="ent-tx"><span class="nm">טיפת חלב</span> - מעקב, חיסונים ובדיקות סקר לתינוק/ת עד גיל 6, לא תלוי בחברות בקופה.</span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🤱</span><span class="ent-tx"><span class="nm">ייעוץ הנקה</span> - יועצת מוסמכת. <span class="co">טלפוני ומרפאה לרוב ללא עלות; ביקורי בית בהשתתפות.</span></span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">💆</span><span class="ent-tx"><span class="nm">סדנת עיסוי תינוקות</span> - כ-5 מפגשים למגע וחיזוק הקשר, עד גיל חצי שנה. בהשתתפות נמוכה.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🚑</span><span class="ent-tx"><span class="nm">סדנת החייאת תינוקות</span> - מפגש עם מד"א: עזרה ראשונה והחייאה. עולה שקלים בודדים - שווה זהב.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🌙</span><span class="ent-tx"><span class="nm">ייעוץ שינה / אחות מלווה</span> - ליווי להסדרת שינת התינוק/ת, או אחות לביקור בית בשבועות הראשונים.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🏨</span><span class="ent-tx"><span class="nm">ימי החלמה / מלונית</span> - כמה לילות מנוחה והחלמה עם התינוק/ת. ההטבה שהכי מעטות מכירות.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🤸</span><span class="ent-tx"><span class="nm">התעמלות לאחר לידה</span> - חזרה לכושר וחיזוק, עד שנה מהלידה, במחיר מסובסד.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🩹</span><span class="ent-tx"><span class="nm">פיזיותרפיה לרצפת האגן</span> - טיפול בבריחת שתן/כאב אחרי לידה. <span class="co">בסל בהפניה רפואית.</span></span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🍼</span><span class="ent-tx"><span class="nm">משאבת חלב וציוד הנקה</span> - משאבות, חזיות ופדים במחיר מסובסד בבתי המרקחת של הקופה.</span><span class="ent-bg plus">משלים</span></div>
+        </div>
+      </details>
 
       <div class="perks-note"><b>שני כללי אצבע:</b> (1) <b>תשמרו קבלות</b> - הרבה מההטבות במשלים עובדות בשיטת החזר (משלמות, מגישות, מקבלות כ-75% בחזרה עד תקרה), לא הנחה במקום. (2) <b>בדקו אכשרה</b> - אם מצטרפות למשלים כשכבר בהריון, חלק מההטבות "נפתחות" רק אחרי כחצי שנה, אז עדיף להצטרף מוקדם. המספרים והזכאות משתנים בין קופה לקופה ומתעדכנים - <b>אל תסמכו על מה ששמעתן מחברה, תבדקו בקופה שלכן</b> (בקישורים למעלה).</div>
       <div class="perks-src">מקורות: משרד הבריאות (health.gov.il), כל-זכות, ביטוח לאומי ואתרי הקופות. דוגמאות מספריות מבוססות על מכבי (יולי 2026) - בקופות אחרות התנאים והסכומים שונים. הזכאויות מתעדכנות; בדקו למקרה שלכן.</div>
