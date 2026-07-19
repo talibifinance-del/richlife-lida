@@ -77,6 +77,8 @@ body{font-family:var(--font);
 .legend{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:14px;font-size:11.5px;font-weight:700;color:rgba(255,255,255,.82);position:relative;z-index:1}
 .legend span{display:inline-flex;align-items:center;gap:5px}
 .legend i{width:10px;height:10px;border-radius:4px;display:inline-block}
+.legend-note{text-align:center;font-size:11px;font-weight:600;color:rgba(255,255,255,.72);margin-top:8px;position:relative;z-index:1;line-height:1.6;max-width:440px;margin-inline:auto}
+.legend-note b{color:#fff;font-weight:800}
 .i-hi{background:#8fc79a}.i-mid{background:#e0b45a}.i-lo{background:#bcd3bf}.i-no{background:#e88f7a}
 
 .controls{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:14px}
@@ -349,6 +351,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <div class="prog"><div class="fill" id="progFill" style="width:0%"></div></div>
     <div class="h-alloc" id="heroAlloc">חלקו את התקציב לקטגוריות למטה</div>
     <div class="legend"><span><i class="i-hi"></i>הכרחי</span><span><i class="i-mid"></i>מומלץ</span><span><i class="i-lo"></i>כיף שיהיה</span><span><i class="i-no"></i>לא מומלץ</span></div>
+    <div class="legend-note"><b>הכרחי</b> = חובה · <b>מומלץ</b> = שווה מאוד ומקל על החיים · <b>כיף שיהיה</b> = נחמד, לא תרגישי חוסר בלי · <b>לא מומלץ</b> = לדלג (לא בטוח או בזבוז כסף)</div>
   </div>
 
   <div class="controls">
@@ -397,7 +400,7 @@ const SEED_DATA={
     ['שק שינה לתינוק','mid','all','במקום שמיכה (שאסורה במיטה עד גיל שנה) - מחמם את התינוק/ת בלי סכנת חנק.'],
     ['מוניטור (שמע / וידאו)','lo','all','לשמוע או לראות את התינוק/ת מחדר אחר. נחמד, לא חובה.'],
     ['בייבי סנס (חיישן נשימה)','lo','all','מזרן-חיישן שמתריע על חוסר תנועה. מרגיע הורים, אך אינו מוצר רפואי ולא מונע SIDS.'],
-    ['בייבי נסט (קן שכיבה)','lo','all','כרית-קן רכה שעוטפת את התינוק/ת - נחמד לזמן ער ולחיבוק בהשגחה. לא לשינה ללא השגחה (סכנת חנק).'],
+    ['בייבי נסט (קן שכיבה)','lo','all','כרית-קן רכה שעוטפת את התינוק/ת - נחמד לזמן ער ולחיבוק. לא נועד לשינה קבועה בלי השגחה.'],
     ['מנורת לילה','lo','all','אור עדין להנקה והחתלה בלילה בלי להעיר לגמרי.'],
     ['כורסת הנקה','lo','all','נוחות בהנקות ארוכות - לא חובה, אפשר כל כיסא נוח.'],
     ['נחשוש / מגן ראש לעריסה','no','all','סכנת חנק והיתקעות. בטרם ומשרד הבריאות ממליצים נגד.'],
@@ -430,7 +433,7 @@ const SEED_DATA={
     ['משחת החתלה (אבץ)','hi','all','למניעת תפרחת חיתולים.'],
     ['שידת/פינת החתלה','lo','all','נוחות; אפשר גם משטח על רהיט קיים.'],
     ['ארגוניות אחסון לשידה','lo','all','לסדר חיתולים, בגדים וקרמים בהישג יד.'],
-    ['פח חיתולים אטום-ריח','lo','all','אפשר לחסוך - פח רגיל עם שקיות עובד.'],
+    ['פח חיתולים אטום-ריח','no','all','הוצאה מיותרת - פח רגיל עם שקיות קשורות עובד מצוין.'],
     ['מחמם מגבונים','no','all','הוצאה מיותרת; מגבון בטמפ׳ חדר בסדר גמור.']
   ],
   'האכלה':[
@@ -445,8 +448,8 @@ const SEED_DATA={
     ['פטמות לבקבוק (זרימה איטית)','mid','formula','מתחילים בזרימה איטית לגיל 0.'],
     ['מברשת בקבוקים','mid','formula','לניקוי יסודי של בקבוקים ופטמות.'],
     ['מחלק מנות אבקת חלב','lo','formula','נוח ליציאות מהבית.'],
-    ['מעקר / סטריליזטור בקבוקים','lo','formula','אפשר גם עיקור בסיר רותח; לא חובה.'],
-    ['מחמם בקבוק','lo','formula','נוחות בלילה; קערת מים חמים עובדת גם.'],
+    ['מעקר / סטריליזטור בקבוקים','no','formula','מיותר - עיקור בסיר רותח או במדיח עובד בול, וחוסך מאות שקלים.'],
+    ['מחמם בקבוק','no','formula','מיותר - קערת מים חמים או מים מהברז עובדים בדיוק אותו דבר.'],
     ['מוצץ','lo','all','לא לקנות הרבה מראש - לתינוק יש העדפות.']
   ],
   'ביגוד וטקסטיל':[
@@ -520,7 +523,8 @@ function catSection(emoji,cat,vis){
   bud.innerHTML=`<label>תקציב לקטגוריה זו</label><div class="amt"><span class="u">₪</span><input class="tabular" type="text" inputmode="numeric" value="${cb?money(cb):''}" placeholder="0"></div>`;
   bud.querySelector('input').addEventListener('input',e=>{const raw=e.target.value.replace(/[^\d]/g,'');S.catB[cat]=raw===''?'':+raw;e.target.value=raw===''?'':money(raw);updateCatHead(sec,cat);recompute();persist();});
   body.appendChild(bud);
-  vis.forEach(it=>body.appendChild(it.pri==='no'?warnRow(it):itemRow(it,sec,cat)));
+  const ORD={hi:0,mid:1,lo:2,no:3};
+  vis.slice().sort((a,b)=>(ORD[a.pri]??9)-(ORD[b.pri]??9)).forEach(it=>body.appendChild(it.pri==='no'?warnRow(it):itemRow(it,sec,cat)));
   const add=document.createElement('button');
   add.className='additem'; add.textContent='＋ הוסף פריט';
   add.onclick=()=>{S.items.push({id:++uid,cat,name:'',pri:'mid',feed:'all',note:'',bought:false,gift:false,paid:''});openState[cat]=true;render();persist();};
