@@ -112,6 +112,8 @@ body{font-family:var(--font);
 .ent-bg{flex:none;width:96px;text-align:center;font-size:11px;font-weight:900;padding:7px 5px;border-radius:10px;white-space:nowrap;line-height:1.15}
 .ent-bg.free{background:var(--pine);color:#fff}
 .ent-bg.plus{background:rgba(var(--red-rgb),.12);color:#8f3a29;border:1.5px solid rgba(var(--red-rgb),.35)}
+.subgrp{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:900;color:var(--pine-deep);margin:14px 0 2px;padding-bottom:4px;border-bottom:2px solid rgba(var(--pine-rgb),.14)}
+.subgrp .sg-note{font-size:10.5px;font-weight:700;color:var(--ink-soft);margin-inline-start:auto}
 
 .exp{background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(var(--pine-rgb),.10);padding:16px;margin-top:14px}
 .exp-top{display:flex;align-items:center;gap:9px;margin-bottom:12px}
@@ -353,52 +355,73 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   <details class="perks" open>
     <summary><span>💎 מה מגיע לכם שאולי לא ידעתם - לפי שלבים</span><span class="chev">▾</span></summary>
     <div class="perks-body">
-      <div class="perks-intro"><b>הצבע אומר הכל:</b> <span class="lgd free">בסל</span> מגיע לך בכל מקרה (לפעמים בתשלום סמלי) · <span class="lgd plus">משלים</span> רק אם יש לך ביטוח משלים, ותלוי בקופה. לחצו על כל שלב כדי לפתוח.</div>
+      <div class="perks-intro"><b>הצבע אומר הכל:</b> <span class="lgd free">ירוק</span> = מגיע לך בכל מקרה - בסל הבריאות, מביטוח לאומי או כזכות בחוק (לפעמים בתשלום סמלי). <span class="lgd plus">משלים</span> = רק אם יש לך ביטוח משלים, ותלוי בקופה. לחצו על כל שלב כדי לפתוח.</div>
 
       <details class="ph before">
-        <summary><span class="ph-ic">🌱</span><span class="ph-nm">לפני ההיריון</span><span class="ph-cnt">3 הטבות</span><span class="ph-chev">▾</span></summary>
+        <summary><span class="ph-ic">🌱</span><span class="ph-nm">לפני ההיריון</span><span class="ph-cnt">5 הטבות</span><span class="ph-chev">▾</span></summary>
         <div class="ph-body">
           <div class="ph-sub">כדאי להתחיל עוד לפני שני הקווים - כמה דברים חשובים (וחינמיים) שווה לעשות מראש.</div>
-          <div class="ent"><span class="ent-ic">🧬</span><span class="ent-tx"><span class="nm">סקר גנטי לגילוי נשאות</span> - הסקר המורחב, חינם לכל אחת. <span class="co">שונה מבדיקות גנטיות של העובר (ראו בשלב הבא).</span></span><span class="ent-bg free">בסל</span></div>
+          <div class="subgrp">🩺 מהבריאות</div>
+          <div class="ent"><span class="ent-ic">🧬</span><span class="ent-tx"><span class="nm">סקר גנטי לגילוי נשאות</span> - הסקר המורחב, חינם לכל אחת (מ-2024, מאות מחלות). <span class="co">שונה מבדיקות גנטיות של העובר (ראו בשלב הבא).</span></span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🩺</span><span class="ent-tx"><span class="nm">בדיקות וחיסונים טרום-היריון</span> - בדיקות דם, בדיקת חסינות (אדמת/אבעבועות), והשלמת חיסון חסר כחודש לפני. </span><span class="ent-bg free">בסל</span></div>
           <div class="ent"><span class="ent-ic">💊</span><span class="ent-tx"><span class="nm">חומצה פולית</span> - מומלץ כ-3 חודשים לפני ההיריון ועד שבוע 12. <span class="co">תוסף זול בקנייה חופשית.</span></span><span class="ent-bg free">זמין וזול</span></div>
-          <div class="ent"><span class="ent-ic">🩺</span><span class="ent-tx"><span class="nm">ייעוץ ובדיקות טרום-היריון</span> - חיסוניות, בלוטת התריס, סוכר וגורמי סיכון אצל רופא/ת הקופה.</span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🌱</span><span class="ent-tx"><span class="nm">טיפולי פוריות / הפריה (IVF)</span> - ממומן בסל עד 2 ילדים מבן הזוג הנוכחי. <span class="co">הרחבות (חו"ל, שימור ביציות) - דרך המשלים.</span></span><span class="ent-bg free">בסל</span></div>
+          <div class="subgrp">⚖️ מהמדינה</div>
+          <div class="ent"><span class="ent-ic">🛡️</span><span class="ent-tx"><span class="nm">הגנה בטיפולי פוריות</span> - היעדרות לטיפולים נחשבת כמחלה בתשלום, והגנה מפיטורים בתקופה ואחריה.</span><span class="ent-bg free">זכות בחוק</span></div>
         </div>
       </details>
 
       <details class="ph during">
-        <summary><span class="ph-ic">🤰</span><span class="ph-nm">במהלך ההיריון</span><span class="ph-cnt">8 הטבות</span><span class="ph-chev">▾</span></summary>
+        <summary><span class="ph-ic">🤰</span><span class="ph-nm">במהלך ההיריון</span><span class="ph-cnt">15 הטבות</span><span class="ph-chev">▾</span></summary>
         <div class="ph-body">
           <div class="ph-sub">רוב המעקב הרפואי חינם בסל. חלק מהבדיקות המתקדמות והליווי (דולה, קורס לידה) הם במשלים.</div>
+          <div class="subgrp">🩺 מהבריאות</div>
           <div class="ent"><span class="ent-ic">🩺</span><span class="ent-tx"><span class="nm">מעקב היריון שגרתי</span> - בדיקות דם, שתן, לחץ דם וסוכר לכל אורך ההריון.</span><span class="ent-bg free">בסל</span></div>
-          <div class="ent"><span class="ent-ic">🖥️</span><span class="ent-tx"><span class="nm">סקירת מערכות</span> (שבועות 19-24) - אולטרסאונד מפורט של איברי העובר.</span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🖥️</span><span class="ent-tx"><span class="nm">סקירת מערכות</span> - הסקירה המאוחרת (19-24) בסל. <span class="co">הסקירה המוקדמת (14-16) לרוב פרטית או דרך המשלים.</span></span><span class="ent-bg free">בסל</span></div>
           <div class="ent"><span class="ent-ic">🔎</span><span class="ent-tx"><span class="nm">שקיפות עורפית + סקר ביוכימי</span> - חישוב סיכון לתסמונת דאון. <span class="co">בהשתתפות עצמית קטנה.</span></span><span class="ent-bg free">בסל</span></div>
-          <div class="ent"><span class="ent-ic">🧬</span><span class="ent-tx"><span class="nm">בדיקות גנטיות של העובר</span> - NIPT לרוב פרטית, חלק מהמשלימים מחזירים; מי שפיר בהתוויה או מגיל 35 בסל.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🍬</span><span class="ent-tx"><span class="nm">בדיקת העמסת סוכר</span> - סקר לסוכרת היריון (שבועות 24-28). חינם.</span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🧬</span><span class="ent-tx"><span class="nm">מי שפיר / סיסי שליה</span> - אבחון גנטי. <span class="co">חינם בסל מגיל 32, או בכל גיל אם יש סיכון רפואי.</span></span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🧪</span><span class="ent-tx"><span class="nm">בדיקת NIPT</span> (דנ"א עוברי מדם האם) - לרוב פרטית; חלק מהמשלימים מחזירים חלק מהעלות.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">💉</span><span class="ent-tx"><span class="nm">חיסוני הריון</span> - שעלת (שבועות 27-36) ושפעת. <span class="co">מגנים על התינוק בחודשים הראשונים.</span></span><span class="ent-bg free">בסל</span></div>
           <div class="ent"><span class="ent-ic">📘</span><span class="ent-tx"><span class="nm">קורס / סדנת הכנה ללידה</span> - הקופה מפעילה סדנה בהשתתפות עצמית, או מחזירה חלק מקורס פרטי.</span><span class="ent-bg plus">משלים</span></div>
-          <div class="ent"><span class="ent-ic">🤝</span><span class="ent-tx"><span class="nm">ליווי דולה ללידה</span> - מלווה אישית להריון וללידה, בהחזר חלקי. הרבה זוגות משלמים בלי לדעת.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🤝</span><span class="ent-tx"><span class="nm">ליווי דולה ללידה</span> - מלווה אישית ללידה, בהחזר חלקי. הרבה זוגות משלמים בלי לדעת.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🌿</span><span class="ent-tx"><span class="nm">טיפולים משלימים</span> - דיקור, שיאצו, רפלקסולוגיה ויוגה להריון (לבחילות, כאבי גב, הכנה ללידה).</span><span class="ent-bg plus">משלים</span></div>
           <div class="ent"><span class="ent-ic">🥗</span><span class="ent-tx"><span class="nm">ייעוץ תזונתי</span> - <span class="co">בסל אם יש סיבה רפואית (כמו סוכרת היריון); אחרת דרך המשלים.</span></span><span class="ent-bg plus">משלים</span></div>
+          <div class="ent"><span class="ent-ic">🩸</span><span class="ent-tx"><span class="nm">שמירת דם טבורי</span> - שימור בבנק פרטי, בהנחה או החזר לבעלות משלים.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="subgrp">⚖️ מהמדינה</div>
+          <div class="ent"><span class="ent-ic">🛏️</span><span class="ent-tx"><span class="nm">גמלת שמירת הריון</span> - פיצוי מביטוח לאומי אם נעדרת מהעבודה 30+ ימים בגלל סיכון רפואי, ואין עבודה חלופית.</span><span class="ent-bg free">ביטוח לאומי</span></div>
           <div class="ent"><span class="ent-ic">🕐</span><span class="ent-tx"><span class="nm">עד 40 שעות היעדרות בתשלום</span> לבדיקות היריון - חוק עבודת נשים (20 שעות למשרה חלקית).</span><span class="ent-bg free">זכות בחוק</span></div>
+          <div class="ent"><span class="ent-ic">🛡️</span><span class="ent-tx"><span class="nm">הגנה מפיטורים בהריון</span> - אסור לפטר עובדת בהריון (6+ חודשים אצל אותו מעסיק) בלי היתר ממשרד העבודה.</span><span class="ent-bg free">זכות בחוק</span></div>
         </div>
       </details>
 
       <details class="ph after">
-        <summary><span class="ph-ic">👶</span><span class="ph-nm">לאחר הלידה</span><span class="ph-cnt">10 הטבות</span><span class="ph-chev">▾</span></summary>
+        <summary><span class="ph-ic">👶</span><span class="ph-nm">לאחר הלידה</span><span class="ph-cnt">16 הטבות</span><span class="ph-chev">▾</span></summary>
         <div class="ph-body">
-          <div class="ph-sub">כאן מסתתר האוצר שרוב הנשים לא מנצלות - סדנאות וליווי בהשתתפות עצמית קטנה, רובם במשלים.</div>
-          <div class="ent"><span class="ent-ic">🎁</span><span class="ent-tx"><span class="nm">מענק לידה + מענק אשפוז</span> - אוטומטי מביטוח לאומי, לא תלוי בקופה.</span><span class="ent-bg free">ביטוח לאומי</span></div>
-          <div class="ent"><span class="ent-ic">👶</span><span class="ent-tx"><span class="nm">טיפת חלב</span> - מעקב, חיסונים ובדיקות סקר לתינוק/ת עד גיל 6, לא תלוי בחברות בקופה.</span><span class="ent-bg free">בסל</span></div>
+          <div class="ph-sub">כאן מסתתר האוצר שרוב הנשים לא מנצלות - סדנאות, ליווי, וזכויות כסף מהמדינה.</div>
+          <div class="subgrp">🩺 מהבריאות</div>
+          <div class="ent"><span class="ent-ic">👶</span><span class="ent-tx"><span class="nm">טיפת חלב + חיסוני תינוק</span> - מעקב, שקילה, חיסוני שגרה (כולל RSV/בייפורטוס) עד גיל 6. חינם, לא תלוי בקופה.</span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">💚</span><span class="ent-tx"><span class="nm">סקר דיכאון אחרי לידה + תמיכה נפשית</span> - שאלון בטיפת חלב (חינם), והפניה לטיפול בסל אם צריך. ~10% מהיולדות.</span><span class="ent-bg free">בסל</span></div>
+          <div class="ent"><span class="ent-ic">🩹</span><span class="ent-tx"><span class="nm">פיזיותרפיה לרצפת האגן</span> - טיפול בבריחת שתן/כאב אחרי לידה. <span class="co">בסל בהפניה רפואית.</span></span><span class="ent-bg free">בסל</span></div>
           <div class="ent"><span class="ent-ic">🤱</span><span class="ent-tx"><span class="nm">ייעוץ הנקה</span> - יועצת מוסמכת. <span class="co">טלפוני ומרפאה לרוב ללא עלות; ביקורי בית בהשתתפות.</span></span><span class="ent-bg plus">משלים</span></div>
           <div class="ent"><span class="ent-ic">💆</span><span class="ent-tx"><span class="nm">סדנת עיסוי תינוקות</span> - כ-5 מפגשים למגע וחיזוק הקשר, עד גיל חצי שנה. בהשתתפות נמוכה.</span><span class="ent-bg plus">משלים</span></div>
           <div class="ent"><span class="ent-ic">🚑</span><span class="ent-tx"><span class="nm">סדנת החייאת תינוקות</span> - מפגש עם מד"א: עזרה ראשונה והחייאה. עולה שקלים בודדים - שווה זהב.</span><span class="ent-bg plus">משלים</span></div>
           <div class="ent"><span class="ent-ic">🌙</span><span class="ent-tx"><span class="nm">ייעוץ שינה / אחות מלווה</span> - ליווי להסדרת שינת התינוק/ת, או אחות לביקור בית בשבועות הראשונים.</span><span class="ent-bg plus">משלים</span></div>
           <div class="ent"><span class="ent-ic">🏨</span><span class="ent-tx"><span class="nm">ימי החלמה / מלונית</span> - כמה לילות מנוחה והחלמה עם התינוק/ת. ההטבה שהכי מעטות מכירות.</span><span class="ent-bg plus">משלים</span></div>
           <div class="ent"><span class="ent-ic">🤸</span><span class="ent-tx"><span class="nm">התעמלות לאחר לידה</span> - חזרה לכושר וחיזוק, עד שנה מהלידה, במחיר מסובסד.</span><span class="ent-bg plus">משלים</span></div>
-          <div class="ent"><span class="ent-ic">🩹</span><span class="ent-tx"><span class="nm">פיזיותרפיה לרצפת האגן</span> - טיפול בבריחת שתן/כאב אחרי לידה. <span class="co">בסל בהפניה רפואית.</span></span><span class="ent-bg free">בסל</span></div>
           <div class="ent"><span class="ent-ic">🍼</span><span class="ent-tx"><span class="nm">משאבת חלב וציוד הנקה</span> - משאבות, חזיות ופדים במחיר מסובסד בבתי המרקחת של הקופה.</span><span class="ent-bg plus">משלים</span></div>
+          <div class="subgrp">🏛️ מהמדינה</div>
+          <div class="ent"><span class="ent-ic">🎁</span><span class="ent-tx"><span class="nm">מענק לידה + מענק אשפוז</span> - תשלום חד-פעמי לרכישת ציוד + מענק לבית החולים. אוטומטי, לא תלוי בקופה.</span><span class="ent-bg free">ביטוח לאומי</span></div>
+          <div class="ent"><span class="ent-ic">💰</span><span class="ent-tx"><span class="nm">דמי לידה</span> - החלפת שכר בזמן חופשת הלידה (15 שבועות מלאים בתנאי אכשרה). <span class="co">אפשר לחלוק חלק עם בן הזוג.</span></span><span class="ent-bg free">ביטוח לאומי</span></div>
+          <div class="ent"><span class="ent-ic">👛</span><span class="ent-tx"><span class="nm">קצבת ילדים</span> - קצבה חודשית לכל ילד/ה עד גיל 18, אוטומטית אחרי הלידה.</span><span class="ent-bg free">ביטוח לאומי</span></div>
+          <div class="ent"><span class="ent-ic">🏖️</span><span class="ent-tx"><span class="nm">חופשת לידה + הגנה מפיטורים</span> - עד 26 שבועות (מי שעבדה שנה+), ואיסור פיטורים בחופשה ו-60 יום אחריה.</span><span class="ent-bg free">זכות בחוק</span></div>
+          <div class="ent"><span class="ent-ic">⏰</span><span class="ent-tx"><span class="nm">שעת הורות</span> - קיצור יום העבודה בשעה בתשלום, ל-4 חודשים אחרי החופשה (ניתן לחלוק עם בן הזוג).</span><span class="ent-bg free">זכות בחוק</span></div>
+          <div class="ent"><span class="ent-ic">👨‍🍼</span><span class="ent-tx"><span class="nm">חופשת אבהות לבן הזוג</span> - עד 5 ימים אחרי הלידה (הראשונים בתשלום), בנוסף ליום הלידה עצמו.</span><span class="ent-bg free">זכות בחוק</span></div>
         </div>
       </details>
 
-      <div class="perks-note"><b>שני כללי אצבע:</b> (1) <b>תשמרו קבלות</b> - הרבה מההטבות במשלים עובדות בשיטת החזר (משלמות, מגישות, מקבלות כ-75% בחזרה עד תקרה), לא הנחה במקום. (2) <b>בדקו אכשרה</b> - אם מצטרפות למשלים כשכבר בהריון, חלק מההטבות "נפתחות" רק אחרי כחצי שנה, אז עדיף להצטרף מוקדם. המספרים והזכאות משתנים בין קופה לקופה ומתעדכנים - <b>אל תסמכו על מה ששמעתן מחברה, תבדקו בקופה שלכן</b> (בקישורים למעלה).</div>
-      <div class="perks-src">מקורות: משרד הבריאות (health.gov.il), כל-זכות, ביטוח לאומי ואתרי הקופות. דוגמאות מספריות מבוססות על מכבי (יולי 2026) - בקופות אחרות התנאים והסכומים שונים. הזכאויות מתעדכנות; בדקו למקרה שלכן.</div>
+      <div class="perks-note"><b>שני עולמות:</b> 🩺 <b>מהבריאות</b> = דרך הקופה (סל או משלים). 🏛️ <b>מהמדינה</b> = ביטוח לאומי וזכויות עבודה, מגיע לכל עובדת בלי קשר לקופה.<br><br><b>שני כללי אצבע למשלים:</b> (1) <b>תשמרו קבלות</b> - הרבה הטבות עובדות בשיטת החזר (משלמות, מגישות, מקבלות כ-75% בחזרה עד תקרה), לא הנחה במקום. (2) <b>בדקו אכשרה</b> - אם מצטרפות למשלים כשכבר בהריון, חלק מההטבות נפתחות רק אחרי כחצי שנה, אז עדיף להצטרף מוקדם. הזכאות והסכומים משתנים בין קופה לקופה ומתעדכנים - <b>אל תסמכו על מה ששמעתן מחברה, תבדקו בקופה שלכן</b> (בקישורים למעלה).</div>
+      <div class="perks-src">מקורות: משרד הבריאות (health.gov.il), ביטוח לאומי (btl.gov.il), כל-זכות ואתרי ארבע הקופות (מכבי/כללית/מאוחדת/לאומית), עדכני ליולי 2026. זו מפה של העיקר - הרשימה המדויקת והמעודכנת לקופה ולתוכנית שלכן נמצאת אצלן (בקישורים למעלה). הזכאויות והסכומים מתעדכנים.</div>
     </div>
   </details>
 
