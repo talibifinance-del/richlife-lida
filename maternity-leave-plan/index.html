@@ -325,7 +325,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <div class="pot-num" id="potNum">0<small> ₪</small></div>
     <div class="pot-use">
       <div class="use-cap">מאיפה הכסף בקופה</div>
-      <div class="use-row"><span class="use-l">🏛️ דמי לידה + מענק</span><span class="use-v" id="srcState">0 ₪</span></div>
+      <div class="use-row"><span class="use-l">🏛️ דמי לידה + מענק<span id="srcStateTag" style="color:var(--pine);font-weight:700"></span></span><span class="use-v" id="srcState">0 ₪</span></div>
       <div class="use-row" id="srcHelpRow"><span class="use-l">🤝 עזרה מההורים</span><span class="use-v" id="srcHelp">0 ₪</span></div>
       <div class="use-row" id="srcHaveRow"><span class="use-l">💰 כבר יש לנו</span><span class="use-v" id="srcHave">0 ₪</span></div>
       <div class="use-row miss" id="srcMissRow"><span class="use-l">🎯 חסר לחסוך</span><span class="use-v" id="srcMiss">0 ₪</span></div>
@@ -387,13 +387,13 @@ const FIELDS=[
   {g:'grpNeed',k:'extra',l:'תוספת חודשית לתינוק/ת',h:'טיטולים, מזון, ביגוד וכו שמצטרפים עם הלידה.'},
   {g:'grpNeed',k:'monthsHome',l:'כמה חודשים אשאר בבית עם התינוק/ת',suf:'חודשים'},
   {g:'grpHave',k:'spouse',l:'הכנסת בן/בת הזוג נטו לחודש',h:'ההכנסה שממשיכה להיכנס בזמן החופשה. אפשר להוסיף כאן גם הכנסות נוספות.'},
-  {g:'grpHave',k:'allowance',l:'דמי לידה (סה"כ)',prefill:true,h:'מהמחשבון דמי לידה. לחצו על הכפתור כדי למשוך אוטומטית.'},
+  {g:'grpHave',k:'allowance',l:'דמי לידה (סה"כ)',prefill:true,netToggle:true,h:'מהמחשבון דמי לידה, וזה סכום <b>ברוטו</b>. בבנק נכנס פחות: מנכים מס הכנסה ו-~4-12% ביטוח לאומי ובריאות. חלק גדול ממס ההכנסה חוזר אחר כך כ<a href="https://talibifinance-del.github.io/richlife-lida/refund-tracker/" target="_blank" rel="noopener" style="color:var(--pine-deep);font-weight:800">החזר מס</a>.'},
   {g:'grpHave',k:'grant',l:'מענק לידה'},
   {g:'grpHave',k:'help',l:'עזרה מההורים (חד-פעמי)'},
   {g:'grpHave',k:'side',l:'כסף שכבר יש בצד'},
   {g:'grpWhen',k:'monthsSave',l:'כמה חודשים יש לי לחסוך עד הלידה',suf:'חודשים'},
 ];
-let S={equip:'',living:'',extra:'',monthsHome:'',spouse:'',allowance:'',grant:'',help:'',side:'',monthsSave:'',buffer:false};
+let S={equip:'',living:'',extra:'',monthsHome:'',spouse:'',allowance:'',grant:'',help:'',side:'',monthsSave:'',buffer:false,netConservative:false};
 
 function buildFields(){
   FIELDS.forEach(f=>{
@@ -404,33 +404,38 @@ function buildFields(){
     wrap.innerHTML=`<label>${f.l}</label>
       <div class="input-shell">${pre}<input class="tabular" type="text" inputmode="numeric" id="f_${f.k}" placeholder="0">${suf}</div>
       ${f.prefill?'<button class="prefill" id="prefillBtn">📥 משכו מהמחשבון דמי לידה</button>':''}
-      ${f.h?`<div class="hint">${f.h}</div>`:''}`;
+      ${f.h?`<div class="hint">${f.h}</div>`:''}
+      ${f.netToggle?'<label class="toggle" style="margin-top:9px"><input type="checkbox" id="netChk"><span class="tg-box"></span><span class="tg-txt"><b>לתכנן לפי נטו זהיר (~85%)</b> - להיערך על הצד הבטוח, כאילו נכנס פחות. עדיף להפתיע לטובה. אפשר להסיר בכל רגע.</span></label>':''}`;
     document.getElementById(f.g).appendChild(wrap);
     const inp=wrap.querySelector('input');
     inp.addEventListener('input',e=>{const raw=e.target.value.replace(/[^\d]/g,'');S[f.k]=raw===''?'':+raw;e.target.value=raw===''?'':money(raw);paint();});
   });
   const pb=document.getElementById('prefillBtn');
   if(pb) pb.onclick=prefillFromMaternity;
+  const nc=document.getElementById('netChk');
+  if(nc) nc.addEventListener('change',e=>{S.netConservative=e.target.checked;paint();});
 }
 
 function calc(){
   const n=k=>+S[k]||0;
+  const allowanceUsed=S.netConservative?Math.round(n('allowance')*0.85):n('allowance'); // נטו זהיר: דמי הלידה ברוטו, מנכים ~15% (מס+ב"ל/בריאות) לתכנון בטוח. המענק פטור ממס, לא נוגעים בו
   const buf=S.buffer?(n('living')+n('extra')):0; // כרית ביטחון = חודש מחיה נוסף
   const needTotal=n('equip')+n('monthsHome')*(n('living')+n('extra'))+buf;
-  const sources=n('allowance')+n('grant')+n('help')+n('side')+n('spouse')*n('monthsHome');
+  const sources=allowanceUsed+n('grant')+n('help')+n('side')+n('spouse')*n('monthsHome');
   const gap=Math.max(0,needTotal-sources);
   // דמי הלידה נכנסים לתוך הקופה. "כבר יש ובדרך" = כסף שכבר ברשותך או שנוחת (דמי לידה+מענק+עזרה+מה שבצד)
-  const coveredIn=n('allowance')+n('grant')+n('help')+n('side');
+  const coveredIn=allowanceUsed+n('grant')+n('help')+n('side');
   const pot=coveredIn+gap; // הקרן שתחיו ממנה בחופשה, כולל דמי הלידה בפנים
   // פירוק הקופה לפי יעד: הציוד יוצא פעם אחת, השאר נמשך חודש-חודש למחיה לאורך חודשי החופשה
   const potEquip=Math.min(n('equip'),pot);
   const potLiving=pot-potEquip;
   const livingMonthly=n('monthsHome')>0?Math.round(potLiving/n('monthsHome')):0;
-  const stateMoney=n('allowance')+n('grant'); // X = דמי לידה + מענק
+  const stateMoney=allowanceUsed+n('grant'); // X = דמי לידה + מענק
+  const netCons=!!S.netConservative;
   const saveMoney=n('side')+gap;              // Q = חיסכון (כבר בצד + עוד לחסוך)
   const covered=needTotal>0 && sources>=needTotal;
   const monthly=n('monthsSave')>0?Math.round(gap/n('monthsSave')):0;
-  return {needTotal,sources,gap,pot,coveredIn,side:n('side'),stateMoney,help:n('help'),saveMoney,potEquip,potLiving,livingMonthly,monthsHome:n('monthsHome'),covered,monthly,months:n('monthsSave')};
+  return {needTotal,sources,gap,pot,coveredIn,side:n('side'),stateMoney,netCons,help:n('help'),saveMoney,potEquip,potLiving,livingMonthly,monthsHome:n('monthsHome'),covered,monthly,months:n('monthsSave')};
 }
 function insightText(c){
   const n=k=>+S[k]||0;
@@ -461,6 +466,7 @@ function paint(){
   document.getElementById('bGapRow').className='brk gap'+(c.gap<=0?' ok':'');
   document.getElementById('potNum').innerHTML=money(c.pot)+'<small> ₪</small>';
   document.getElementById('srcState').textContent=money(c.stateMoney)+' ₪';
+  document.getElementById('srcStateTag').textContent=c.netCons?' (נטו זהיר)':'';
   document.getElementById('srcHelp').textContent=money(c.help)+' ₪';
   document.getElementById('srcHelpRow').style.display=c.help>0?'':'none';
   document.getElementById('srcHave').textContent=money(c.side)+' ₪';
@@ -495,7 +501,7 @@ function prefillFromMaternity(){
 
 // save / share
 const SKEY='richlife-leaveplan-v1';
-const ORDER=['equip','living','extra','monthsHome','spouse','allowance','grant','help','side','monthsSave','buffer'];
+const ORDER=['equip','living','extra','monthsHome','spouse','allowance','grant','help','side','monthsSave','buffer','netConservative'];
 function enc(){return JSON.stringify(ORDER.map(k=>S[k]));}
 function save(){try{localStorage.setItem(SKEY,enc());}catch(e){}}
 function dec(str){try{const a=JSON.parse(str);ORDER.forEach((k,i)=>S[k]=a[i]??'');return true;}catch(e){return false;}}
@@ -518,6 +524,7 @@ document.getElementById('bufferChk').addEventListener('change',e=>{S.buffer=e.ta
   if(loaded){
     ORDER.forEach(k=>{const el=document.getElementById('f_'+k);if(el&&S[k]!==''&&typeof S[k]!=='boolean')el.value=money(S[k]);});
     document.getElementById('bufferChk').checked=!!S.buffer;
+    const nc=document.getElementById('netChk');if(nc)nc.checked=!!S.netConservative;
   }
   paint();
   if(h){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}
