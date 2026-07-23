@@ -81,6 +81,9 @@ body{font-family:var(--font);
 .potbox .use-l{font-weight:700;color:var(--ink-soft)}
 .potbox .use-v{font-weight:900;color:var(--pine-darker);font-variant-numeric:tabular-nums;white-space:nowrap}
 .potbox .use-sub{font-size:11.5px;font-weight:600;color:var(--ink-soft);opacity:.9;text-align:center;margin-top:6px}
+.potbox .use-note{font-size:11.5px;font-weight:800;color:var(--red);text-align:center;margin-top:6px}
+.potbox .use-note.ok{color:var(--pine)}
+.potbox .use-row.sub .use-l{font-weight:600;color:var(--ink-soft)}
 .potbox .pot-note{font-size:12px;font-weight:600;color:var(--ink-soft);line-height:1.45;max-width:450px;margin:0 auto}
 
 .breakdown{margin-top:14px;background:var(--card);border-radius:16px;box-shadow:var(--shadow);border:1px solid rgba(var(--pine-rgb),.10);padding:16px}
@@ -321,9 +324,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   <div class="potbox" id="potbox">
     <div class="pot-lbl">🎯 כמה סה"כ צריך שיהיה בקופה לחופשת הלידה</div>
     <div class="pot-num" id="potNum">0<small> ₪</small></div>
-    <div class="pot-split">
-      <span class="pill have">כבר יש ובדרך<b id="potHave">0 ₪</b></span>
-      <span class="pill save">עוד לחסוך<b id="potSave">0 ₪</b></span>
+    <div class="pot-use">
+      <div class="use-cap">מאיפה הכסף בקופה</div>
+      <div class="use-row"><span class="use-l">🏛️ דמי לידה + מענק</span><span class="use-v" id="srcState">0 ₪</span></div>
+      <div class="use-row" id="srcHelpRow"><span class="use-l">🤝 עזרה מההורים</span><span class="use-v" id="srcHelp">0 ₪</span></div>
+      <div class="use-row"><span class="use-l">💰 חיסכון שלכם</span><span class="use-v" id="srcSave">0 ₪</span></div>
+      <div class="use-note" id="srcSaveNote"></div>
     </div>
     <div class="pot-use">
       <div class="use-cap">לאן הקופה הולכת</div>
@@ -421,9 +427,11 @@ function calc(){
   const potEquip=Math.min(n('equip'),pot);
   const potLiving=pot-potEquip;
   const livingMonthly=n('monthsHome')>0?Math.round(potLiving/n('monthsHome')):0;
+  const stateMoney=n('allowance')+n('grant'); // X = דמי לידה + מענק
+  const saveMoney=n('side')+gap;              // Q = חיסכון (כבר בצד + עוד לחסוך)
   const covered=needTotal>0 && sources>=needTotal;
   const monthly=n('monthsSave')>0?Math.round(gap/n('monthsSave')):0;
-  return {needTotal,sources,gap,pot,coveredIn,side:n('side'),potEquip,potLiving,livingMonthly,monthsHome:n('monthsHome'),covered,monthly,months:n('monthsSave')};
+  return {needTotal,sources,gap,pot,coveredIn,side:n('side'),stateMoney,help:n('help'),saveMoney,potEquip,potLiving,livingMonthly,monthsHome:n('monthsHome'),covered,monthly,months:n('monthsSave')};
 }
 function insightText(c){
   const n=k=>+S[k]||0;
@@ -453,8 +461,13 @@ function paint(){
   document.getElementById('bGap').textContent=money(c.gap)+' ₪';
   document.getElementById('bGapRow').className='brk gap'+(c.gap<=0?' ok':'');
   document.getElementById('potNum').innerHTML=money(c.pot)+'<small> ₪</small>';
-  document.getElementById('potHave').textContent=money(c.coveredIn)+' ₪';
-  document.getElementById('potSave').textContent=money(c.gap)+' ₪';
+  document.getElementById('srcState').textContent=money(c.stateMoney)+' ₪';
+  document.getElementById('srcHelp').textContent=money(c.help)+' ₪';
+  document.getElementById('srcHelpRow').style.display=c.help>0?'':'none';
+  document.getElementById('srcSave').textContent=money(c.saveMoney)+' ₪';
+  const sn=document.getElementById('srcSaveNote');
+  if(c.gap>0){sn.textContent='מזה עוד לחסוך: '+money(c.gap)+' ₪';sn.className='use-note';}
+  else{sn.textContent='הכל כבר בצד 💚';sn.className='use-note ok';}
   document.getElementById('useEquip').textContent=money(c.potEquip)+' ₪';
   document.getElementById('useLivingM').textContent=money(c.livingMonthly)+' ₪';
   document.getElementById('useSub').textContent = c.potLiving>0
