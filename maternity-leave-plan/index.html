@@ -319,10 +319,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   </div>
 
   <div class="potbox" id="potbox">
-    <div class="pot-lbl">🎯 כמה סה"כ צריך שיהיה בקופה ברגע הלידה</div>
+    <div class="pot-lbl">🎯 כמה סה"כ צריך שיהיה בקופה לחופשת הלידה</div>
     <div class="pot-num" id="potNum">0<small> ₪</small></div>
     <div class="pot-split">
-      <span class="pill have">כבר יש בצד<b id="potHave">0 ₪</b></span>
+      <span class="pill have">כבר יש ובדרך<b id="potHave">0 ₪</b></span>
       <span class="pill save">עוד לחסוך<b id="potSave">0 ₪</b></span>
     </div>
     <div class="pot-use">
@@ -331,7 +331,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <div class="use-row"><span class="use-l">🏠 מחיה — משיכה כל חודש</span><span class="use-v" id="useLivingM">0 ₪</span></div>
       <div class="use-sub" id="useSub"></div>
     </div>
-    <div class="pot-note">זה הכסף שצריך להגיע איתו ללידה בחיסכון, אחרי שכבר קיזזנו דמי לידה, מענק, עזרה מההורים והכנסת בן/בת הזוג שנכנסת לאורך החופשה.</div>
+    <div class="pot-note">זו כל הקרן שתחיו ממנה בחופשה: דמי הלידה, המענק, העזרה ומה שכבר בצד - הכל נכנס לקופה, ומושכים ממנה כל חודש. הכנסת בן/בת הזוג ממשיכה להיכנס בנפרד וממשיכה כרגיל.</div>
   </div>
 
   <div class="breakdown">
@@ -414,14 +414,16 @@ function calc(){
   const needTotal=n('equip')+n('monthsHome')*(n('living')+n('extra'))+buf;
   const sources=n('allowance')+n('grant')+n('help')+n('side')+n('spouse')*n('monthsHome');
   const gap=Math.max(0,needTotal-sources);
-  const pot=n('side')+gap; // כמה צריך שיהיה בקופה ברגע הלידה = מה שכבר בצד + מה שעוד צריך לחסוך
+  // דמי הלידה נכנסים לתוך הקופה. "כבר יש ובדרך" = כסף שכבר ברשותך או שנוחת (דמי לידה+מענק+עזרה+מה שבצד)
+  const coveredIn=n('allowance')+n('grant')+n('help')+n('side');
+  const pot=coveredIn+gap; // הקרן שתחיו ממנה בחופשה, כולל דמי הלידה בפנים
   // פירוק הקופה לפי יעד: הציוד יוצא פעם אחת, השאר נמשך חודש-חודש למחיה לאורך חודשי החופשה
   const potEquip=Math.min(n('equip'),pot);
   const potLiving=pot-potEquip;
   const livingMonthly=n('monthsHome')>0?Math.round(potLiving/n('monthsHome')):0;
   const covered=needTotal>0 && sources>=needTotal;
   const monthly=n('monthsSave')>0?Math.round(gap/n('monthsSave')):0;
-  return {needTotal,sources,gap,pot,side:n('side'),potEquip,potLiving,livingMonthly,monthsHome:n('monthsHome'),covered,monthly,months:n('monthsSave')};
+  return {needTotal,sources,gap,pot,coveredIn,side:n('side'),potEquip,potLiving,livingMonthly,monthsHome:n('monthsHome'),covered,monthly,months:n('monthsSave')};
 }
 function insightText(c){
   const n=k=>+S[k]||0;
@@ -451,7 +453,7 @@ function paint(){
   document.getElementById('bGap').textContent=money(c.gap)+' ₪';
   document.getElementById('bGapRow').className='brk gap'+(c.gap<=0?' ok':'');
   document.getElementById('potNum').innerHTML=money(c.pot)+'<small> ₪</small>';
-  document.getElementById('potHave').textContent=money(c.side)+' ₪';
+  document.getElementById('potHave').textContent=money(c.coveredIn)+' ₪';
   document.getElementById('potSave').textContent=money(c.gap)+' ₪';
   document.getElementById('useEquip').textContent=money(c.potEquip)+' ₪';
   document.getElementById('useLivingM').textContent=money(c.livingMonthly)+' ₪';
