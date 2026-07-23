@@ -65,6 +65,17 @@ body{font-family:var(--font);
 .hero .h-meta{font-size:13px;font-weight:700;color:rgba(255,255,255,.9);position:relative;z-index:1}
 .hero.covered .h-num{font-size:clamp(28px,7vw,40px)}
 
+.potbox{margin-top:14px;background:linear-gradient(135deg,rgba(var(--sage-rgb),.34),rgba(var(--sage-rgb),.15));border:1.5px solid rgba(var(--pine-rgb),.30);border-radius:18px;padding:clamp(16px,3.4vw,22px);text-align:center}
+.potbox .pot-lbl{font-size:13.5px;font-weight:800;color:var(--pine-deep)}
+.potbox .pot-num{font-size:clamp(30px,8.5vw,46px);font-weight:900;color:var(--pine-darker);letter-spacing:-.02em;line-height:1.05;margin:4px 0 9px}
+.potbox .pot-num small{font-size:.42em;font-weight:800;opacity:.72}
+.potbox .pot-split{display:inline-flex;flex-wrap:wrap;gap:7px 10px;justify-content:center;margin-bottom:9px}
+.potbox .pill{font-size:12.5px;font-weight:700;background:#fff;border:1.5px solid rgba(var(--pine-rgb),.20);border-radius:100px;padding:6px 13px;color:var(--pine-deep)}
+.potbox .pill b{font-variant-numeric:tabular-nums;margin-inline-start:3px}
+.potbox .pill.save b{color:var(--red)}
+.potbox .pill.have b{color:var(--pine)}
+.potbox .pot-note{font-size:12px;font-weight:600;color:var(--ink-soft);line-height:1.45;max-width:450px;margin:0 auto}
+
 .breakdown{margin-top:14px;background:var(--card);border-radius:16px;box-shadow:var(--shadow);border:1px solid rgba(var(--pine-rgb),.10);padding:16px}
 .brk{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px dashed rgba(var(--pine-rgb),.16);font-size:14px}
 .brk:first-child{border-top:none}
@@ -300,6 +311,16 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <div class="h-meta" id="heroMeta">מלאו את השדות כדי לראות</div>
   </div>
 
+  <div class="potbox" id="potbox">
+    <div class="pot-lbl">🎯 כמה סה"כ צריך שיהיה בקופה ברגע הלידה</div>
+    <div class="pot-num" id="potNum">0<small> ₪</small></div>
+    <div class="pot-split">
+      <span class="pill have">כבר יש בצד<b id="potHave">0 ₪</b></span>
+      <span class="pill save">עוד לחסוך<b id="potSave">0 ₪</b></span>
+    </div>
+    <div class="pot-note">זה הכסף שצריך להגיע איתו ללידה בחיסכון, אחרי שכבר קיזזנו דמי לידה, מענק, עזרה מההורים והכנסת בן/בת הזוג שנכנסת לאורך החופשה.</div>
+  </div>
+
   <div class="breakdown">
     <div class="brk need"><span class="l">💸 סה"כ שצריך (ציוד + מחיה בחופשה)</span><span class="v" id="bNeed">0 ₪</span></div>
     <div class="brk have"><span class="l">🟢 סה"כ מקורות (דמי לידה, מענק, עזרה, חיסכון, הכנסת בן/בת זוג)</span><span class="v" id="bHave">0 ₪</span></div>
@@ -380,9 +401,10 @@ function calc(){
   const needTotal=n('equip')+n('monthsHome')*(n('living')+n('extra'))+buf;
   const sources=n('allowance')+n('grant')+n('help')+n('side')+n('spouse')*n('monthsHome');
   const gap=Math.max(0,needTotal-sources);
+  const pot=n('side')+gap; // כמה צריך שיהיה בקופה ברגע הלידה = מה שכבר בצד + מה שעוד צריך לחסוך
   const covered=needTotal>0 && sources>=needTotal;
   const monthly=n('monthsSave')>0?Math.round(gap/n('monthsSave')):0;
-  return {needTotal,sources,gap,covered,monthly,months:n('monthsSave')};
+  return {needTotal,sources,gap,pot,side:n('side'),covered,monthly,months:n('monthsSave')};
 }
 function insightText(c){
   const n=k=>+S[k]||0;
@@ -411,6 +433,9 @@ function paint(){
   document.getElementById('bHave').textContent=money(c.sources)+' ₪';
   document.getElementById('bGap').textContent=money(c.gap)+' ₪';
   document.getElementById('bGapRow').className='brk gap'+(c.gap<=0?' ok':'');
+  document.getElementById('potNum').innerHTML=money(c.pot)+'<small> ₪</small>';
+  document.getElementById('potHave').textContent=money(c.side)+' ₪';
+  document.getElementById('potSave').textContent=money(c.gap)+' ₪';
   const ins=document.getElementById('insight'); const txt=insightText(c);
   ins.textContent=txt; ins.hidden=!txt;
   save();
