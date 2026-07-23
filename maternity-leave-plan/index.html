@@ -74,6 +74,13 @@ body{font-family:var(--font);
 .potbox .pill b{font-variant-numeric:tabular-nums;margin-inline-start:3px}
 .potbox .pill.save b{color:var(--red)}
 .potbox .pill.have b{color:var(--pine)}
+.potbox .pot-use{margin:12px auto 10px;max-width:430px;text-align:right;background:#fff;border:1.5px solid rgba(var(--pine-rgb),.16);border-radius:13px;padding:10px 14px}
+.potbox .use-cap{font-size:11.5px;font-weight:800;color:var(--pine);text-align:center;margin-bottom:7px;letter-spacing:.02em}
+.potbox .use-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px dashed rgba(var(--pine-rgb),.16);font-size:13.5px}
+.potbox .use-row:first-of-type{border-top:none}
+.potbox .use-l{font-weight:700;color:var(--ink-soft)}
+.potbox .use-v{font-weight:900;color:var(--pine-darker);font-variant-numeric:tabular-nums;white-space:nowrap}
+.potbox .use-sub{font-size:11.5px;font-weight:600;color:var(--ink-soft);opacity:.9;text-align:center;margin-top:6px}
 .potbox .pot-note{font-size:12px;font-weight:600;color:var(--ink-soft);line-height:1.45;max-width:450px;margin:0 auto}
 
 .breakdown{margin-top:14px;background:var(--card);border-radius:16px;box-shadow:var(--shadow);border:1px solid rgba(var(--pine-rgb),.10);padding:16px}
@@ -318,6 +325,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <span class="pill have">כבר יש בצד<b id="potHave">0 ₪</b></span>
       <span class="pill save">עוד לחסוך<b id="potSave">0 ₪</b></span>
     </div>
+    <div class="pot-use">
+      <div class="use-cap">לאן הקופה הולכת</div>
+      <div class="use-row"><span class="use-l">🍼 ציוד לתינוק/ת (חד-פעמי)</span><span class="use-v" id="useEquip">0 ₪</span></div>
+      <div class="use-row"><span class="use-l">🏠 מחיה — משיכה כל חודש</span><span class="use-v" id="useLivingM">0 ₪</span></div>
+      <div class="use-sub" id="useSub"></div>
+    </div>
     <div class="pot-note">זה הכסף שצריך להגיע איתו ללידה בחיסכון, אחרי שכבר קיזזנו דמי לידה, מענק, עזרה מההורים והכנסת בן/בת הזוג שנכנסת לאורך החופשה.</div>
   </div>
 
@@ -402,9 +415,13 @@ function calc(){
   const sources=n('allowance')+n('grant')+n('help')+n('side')+n('spouse')*n('monthsHome');
   const gap=Math.max(0,needTotal-sources);
   const pot=n('side')+gap; // כמה צריך שיהיה בקופה ברגע הלידה = מה שכבר בצד + מה שעוד צריך לחסוך
+  // פירוק הקופה לפי יעד: הציוד יוצא פעם אחת, השאר נמשך חודש-חודש למחיה לאורך חודשי החופשה
+  const potEquip=Math.min(n('equip'),pot);
+  const potLiving=pot-potEquip;
+  const livingMonthly=n('monthsHome')>0?Math.round(potLiving/n('monthsHome')):0;
   const covered=needTotal>0 && sources>=needTotal;
   const monthly=n('monthsSave')>0?Math.round(gap/n('monthsSave')):0;
-  return {needTotal,sources,gap,pot,side:n('side'),covered,monthly,months:n('monthsSave')};
+  return {needTotal,sources,gap,pot,side:n('side'),potEquip,potLiving,livingMonthly,monthsHome:n('monthsHome'),covered,monthly,months:n('monthsSave')};
 }
 function insightText(c){
   const n=k=>+S[k]||0;
@@ -436,6 +453,11 @@ function paint(){
   document.getElementById('potNum').innerHTML=money(c.pot)+'<small> ₪</small>';
   document.getElementById('potHave').textContent=money(c.side)+' ₪';
   document.getElementById('potSave').textContent=money(c.gap)+' ₪';
+  document.getElementById('useEquip').textContent=money(c.potEquip)+' ₪';
+  document.getElementById('useLivingM').textContent=money(c.livingMonthly)+' ₪';
+  document.getElementById('useSub').textContent = c.potLiving>0
+    ? (c.monthsHome>0 ? `לאורך ${c.monthsHome} חודשי החופשה · סה"כ ${money(c.potLiving)} ₪ למחיה` : `סה"כ ${money(c.potLiving)} ₪ למחיה`)
+    : 'המחיה בחופשה מכוסה מההכנסה השוטפת שנכנסת';
   const ins=document.getElementById('insight'); const txt=insightText(c);
   ins.textContent=txt; ins.hidden=!txt;
   save();
