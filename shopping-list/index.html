@@ -603,11 +603,13 @@ const SKEY='richlife-shopping-v3';
 function enc(){return JSON.stringify({t:S.total,f:feedMode,cb:S.catB,it:S.items.map(it=>[it.cat,it.name,it.pri,it.feed,it.note,it.bought?1:0,it.gift?1:0,it.paid])});}
 function persist(){try{localStorage.setItem(SKEY,enc());}catch(e){}}
 function dec(str){try{const o=JSON.parse(str);if(!o||!Array.isArray(o.it))return null;feedMode=o.f||'all';return {total:o.t??'',catB:o.cb||{},items:o.it.map(x=>({id:++uid,cat:x[0]||'שונות',name:x[1]||'',pri:x[2]||'mid',feed:x[3]||'all',note:x[4]||'',bought:!!x[5],gift:!!x[6],paid:x[7]??''}))};}catch(e){return null;}}
+const SHARE_API='https://richlife-share.tali-bi-finance.workers.dev';
 function makeLink(){return location.origin+location.pathname+location.search+'#s='+encodeURIComponent(enc());}
+async function shortLink(){try{const r=await fetch(SHARE_API,{method:'POST',body:enc()});if(!r.ok)throw 0;const j=await r.json();if(!j||!j.id)throw 0;return location.origin+location.pathname+location.search+'#p='+j.id;}catch(e){return makeLink();}}
 (function(){
   const btn=document.getElementById('shareBtn'),wrap=document.getElementById('actLink'),field=document.getElementById('linkField'),copy=document.getElementById('copyBtn');
   const flash=(el,m)=>{const o=el.textContent;el.textContent=m;setTimeout(()=>el.textContent=o,1700);};
-  btn.onclick=()=>{const l=makeLink();field.value=l;wrap.hidden=false;field.focus();field.select();try{navigator.clipboard.writeText(l).then(()=>flash(btn,'✓ הקישור הועתק'),()=>{});}catch(e){}};
+  btn.onclick=async()=>{wrap.hidden=false;field.value='יוצר קישור...';btn.disabled=true;try{const l=await shortLink();field.value=l;field.focus();field.select();try{navigator.clipboard.writeText(l).then(()=>flash(btn,'✓ הקישור הועתק'),()=>{});}catch(e){}}finally{btn.disabled=false;}};
   copy.onclick=()=>{field.select();let ok=false;try{ok=document.execCommand('copy');}catch(e){}try{navigator.clipboard&&navigator.clipboard.writeText(field.value);ok=true;}catch(e){}flash(copy,ok?'✓ הועתק':'בחר/י והעתק/י');};
 })();
 document.getElementById('resetBtn').onclick=()=>{if(confirm('לאפס את הרשימה לברירת המחדל? כל השינויים יימחקו.')){try{localStorage.removeItem(SKEY);}catch(e){}feedMode='all';S=seed();document.getElementById('totalBudget').value='';syncFeedChips();render();}};
@@ -626,6 +628,9 @@ function syncFeedChips(){document.querySelectorAll('#feedChips .feed-chip').forE
   render();
   if(fromLink){persist();try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}
 })();
+
+// short-link (#p=) loader: fetch the raw payload and apply it with the same dec/render path
+(function(){var hp=(location.hash||'').match(/p=([0-9A-Za-z]{4,16})/);if(!hp)return;fetch(SHARE_API+'/?id='+encodeURIComponent(hp[1])).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){var loaded=dec(t);if(!loaded||!loaded.items)return;S=loaded;document.getElementById('totalBudget').value=(S.total!=='')?money(S.total):'';syncFeedChips();render();persist();try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}).catch(function(){});})();
 </script>
 </body>
 </html>

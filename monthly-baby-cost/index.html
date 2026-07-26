@@ -352,11 +352,13 @@ const SKEY='richlife-monthlybaby-v1';
 function enc(){return JSON.stringify(items.map(it=>[it.e,it.l,it.h,it.a]));}
 function persist(){try{localStorage.setItem(SKEY,enc());}catch(e){}}
 function dec(str){try{const a=JSON.parse(str);if(!Array.isArray(a))return null;return a.map(x=>({id:++uid,e:x[0]||'•',l:x[1]||'',h:x[2]||'',a:x[3]??''}));}catch(e){return null;}}
+const SHARE_API='https://richlife-share.tali-bi-finance.workers.dev';
 function makeLink(){return location.origin+location.pathname+location.search+'#s='+encodeURIComponent(enc());}
+async function shortLink(){try{const r=await fetch(SHARE_API,{method:'POST',body:enc()});if(!r.ok)throw 0;const j=await r.json();if(!j||!j.id)throw 0;return location.origin+location.pathname+location.search+'#p='+j.id;}catch(e){return makeLink();}}
 (function(){
   const btn=document.getElementById('shareBtn'),wrap=document.getElementById('actLink'),field=document.getElementById('linkField'),copy=document.getElementById('copyBtn');
   const flash=(el,m)=>{const o=el.textContent;el.textContent=m;setTimeout(()=>el.textContent=o,1700);};
-  btn.onclick=()=>{const l=makeLink();field.value=l;wrap.hidden=false;field.focus();field.select();try{navigator.clipboard.writeText(l).then(()=>flash(btn,'✓ הקישור הועתק'),()=>{});}catch(e){}};
+  btn.onclick=async()=>{wrap.hidden=false;field.value='יוצר קישור...';btn.disabled=true;try{const l=await shortLink();field.value=l;field.focus();field.select();try{navigator.clipboard.writeText(l).then(()=>flash(btn,'✓ הקישור הועתק'),()=>{});}catch(e){}}finally{btn.disabled=false;}};
   copy.onclick=()=>{field.select();let ok=false;try{ok=document.execCommand('copy');}catch(e){}try{navigator.clipboard&&navigator.clipboard.writeText(field.value);ok=true;}catch(e){}flash(copy,ok?'✓ הועתק':'בחר/י והעתק/י');};
 })();
 
@@ -371,6 +373,7 @@ function makeLink(){return location.origin+location.pathname+location.search+'#s
   render();
   if(fromLink){persist();try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}
 })();
+(function(){var hp=(location.hash||'').match(/p=([0-9A-Za-z]{4,16})/);if(!hp)return;fetch(SHARE_API+'/?id='+encodeURIComponent(hp[1])).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){var d=dec(t);if(d&&d.length){items=d;render();persist();try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}}).catch(function(){});})();
 </script>
 </body>
 </html>
