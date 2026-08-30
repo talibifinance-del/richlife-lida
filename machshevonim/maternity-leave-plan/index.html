@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>כמה עולה חודש עם תינוק · RichLife</title>
+<title>מחשבון תכנון כלכלי לחופשת הלידה · RichLife</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -39,33 +39,75 @@ body{font-family:var(--font);
 .hero-title h1 .em{color:var(--pine)}
 .hero-title p{color:var(--ink-soft);font-size:clamp(14px,3.3vw,17px);font-weight:500;margin-top:7px;max-width:520px;margin-inline:auto}
 .livuy-wrap{text-align:center;margin:13px 0 0}
-.livuy-cta{display:inline-flex;align-items:center;gap:7px;font-family:var(--font);font-size:14px;font-weight:800;color:var(--pine-deep);text-decoration:none;background:linear-gradient(120deg,rgba(var(--sage-rgb),.38),rgba(var(--sage-rgb),.14));border:1.5px solid rgba(var(--pine-rgb),.28);border-radius:100px;padding:9px 18px;transition:all .18s}
+.livuy-cta{display:inline-flex;align-items:center;gap:7px;font-family:var(--font);font-size:14px;font-weight:800;color:var(--pine-deep);text-decoration:none;
+  background:linear-gradient(120deg,rgba(var(--sage-rgb),.38),rgba(var(--sage-rgb),.14));border:1.5px solid rgba(var(--pine-rgb),.28);border-radius:100px;padding:9px 18px;transition:all .18s}
 .livuy-cta:hover{border-color:var(--pine);background:#fff;box-shadow:var(--shadow)}
+
+.card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(var(--pine-rgb),.10);padding:clamp(16px,3vw,22px);margin-top:16px}
+.card > h2{font-size:15.5px;font-weight:900;color:var(--pine-darker);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.field{margin-bottom:15px}
+.field:last-child{margin-bottom:0}
+.field > label{display:block;font-size:14px;font-weight:800;color:var(--ink);margin-bottom:7px}
+.field .hint{font-size:12px;font-weight:600;color:var(--ink-soft);margin-top:5px;line-height:1.45}
+.input-shell{display:flex;align-items:center;background:var(--sage-tint);border:1.5px solid transparent;border-radius:12px;transition:border-color .18s,box-shadow .18s}
+.input-shell:focus-within{border-color:var(--pine);background:#fff;box-shadow:0 0 0 4px rgba(var(--pine-rgb),.10)}
+.input-shell .unit{padding-inline-start:12px;color:var(--ink-soft);font-weight:700;font-size:14px;white-space:nowrap}
+.input-shell .unit.suf{padding:0 12px 0 0}
+.input-shell input{width:100%;border:none;background:transparent;outline:none;font-family:var(--font);font-size:16px;font-weight:800;color:var(--ink);padding:12px}
+.prefill{margin-top:7px;font-family:var(--font);cursor:pointer;border:1.5px solid rgba(var(--pine-rgb),.3);background:rgba(var(--sage-rgb),.15);color:var(--pine-deep);font-size:12.5px;font-weight:800;padding:8px 12px;border-radius:10px;transition:all .15s}
+.prefill:hover{border-color:var(--pine);background:#fff}
 
 .hero{background:linear-gradient(135deg,var(--pine-deep),var(--pine-darker) 72%);border-radius:20px;padding:clamp(20px,4vw,26px);box-shadow:var(--shadow-hi);position:relative;overflow:hidden;color:#fff;text-align:center;margin-top:18px}
 .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(480px 240px at 85% -10%,rgba(var(--sage-rgb),.30),transparent 60%);pointer-events:none}
 .hero .h-lbl{font-size:13.5px;font-weight:700;color:rgba(255,255,255,.78);position:relative;z-index:1}
 .hero .h-num{font-size:clamp(38px,11vw,58px);font-weight:900;letter-spacing:-.02em;line-height:1.05;margin:5px 0;color:#c7ecce;position:relative;z-index:1}
 .hero .h-num small{font-size:.4em;font-weight:800;opacity:.8}
-.hero .h-meta{font-size:14px;font-weight:800;color:rgba(255,255,255,.92);position:relative;z-index:1}
-.hero .h-meta b{color:#fff}
+.hero .h-meta{font-size:13px;font-weight:700;color:rgba(255,255,255,.9);position:relative;z-index:1}
+.hero.covered .h-num{font-size:clamp(28px,7vw,40px)}
 
-.card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:1px solid rgba(var(--pine-rgb),.10);padding:clamp(14px,3vw,18px);margin-top:16px}
-.card > h2{font-size:15px;font-weight:900;color:var(--pine-darker);margin-bottom:6px}
-.card .sub{font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:10px;line-height:1.45}
-.row{display:flex;align-items:center;gap:9px;padding:8px 0;border-top:1px solid rgba(var(--pine-rgb),.09)}
-.row:first-of-type{border-top:none}
-.row .emoji{font-size:18px;flex:none}
-.row input.lbl{flex:1;min-width:0;font-family:var(--font);font-size:14.5px;font-weight:700;color:var(--ink);border:none;background:transparent;border-bottom:1px dashed rgba(var(--pine-rgb),.2);padding:4px 2px}
-.row input.lbl:focus{outline:none;border-bottom-color:var(--pine)}
-.row .amt{display:flex;align-items:center;background:var(--sage-tint);border:1.5px solid transparent;border-radius:10px;flex:none;width:118px}
-.row .amt:focus-within{border-color:var(--pine);background:#fff;box-shadow:0 0 0 3px rgba(var(--pine-rgb),.1)}
-.row .amt .u{padding-inline-start:10px;color:var(--ink-soft);font-weight:700;font-size:13.5px}
-.row .amt input{width:100%;border:none;background:transparent;outline:none;font-family:var(--font);font-size:15px;font-weight:800;color:var(--ink);padding:8px 9px;min-width:0}
-.row .del{flex:none;width:26px;height:26px;border-radius:8px;border:none;cursor:pointer;background:rgba(var(--red-rgb),.09);color:var(--red);font-size:13px;font-weight:800}
-.hint-line{font-size:11px;font-weight:600;color:var(--ink-soft);margin:-4px 0 2px 27px}
-.addline{margin-top:11px;width:100%;font-family:var(--font);cursor:pointer;border:1.5px dashed rgba(var(--pine-rgb),.35);background:rgba(var(--sage-rgb),.12);color:var(--pine-deep);font-size:14px;font-weight:800;padding:11px;border-radius:12px}
-.addline:hover{border-color:var(--pine);background:#fff}
+.potbox{margin-top:14px;background:linear-gradient(135deg,rgba(var(--sage-rgb),.34),rgba(var(--sage-rgb),.15));border:1.5px solid rgba(var(--pine-rgb),.30);border-radius:18px;padding:clamp(16px,3.4vw,22px);text-align:center}
+.potbox .pot-lbl{font-size:13.5px;font-weight:800;color:var(--pine-deep)}
+.potbox .pot-num{font-size:clamp(30px,8.5vw,46px);font-weight:900;color:var(--pine-darker);letter-spacing:-.02em;line-height:1.05;margin:4px 0 9px}
+.potbox .pot-num small{font-size:.42em;font-weight:800;opacity:.72}
+.potbox .pot-split{display:inline-flex;flex-wrap:wrap;gap:7px 10px;justify-content:center;margin-bottom:9px}
+.potbox .pill{font-size:12.5px;font-weight:700;background:#fff;border:1.5px solid rgba(var(--pine-rgb),.20);border-radius:100px;padding:6px 13px;color:var(--pine-deep)}
+.potbox .pill b{font-variant-numeric:tabular-nums;margin-inline-start:3px}
+.potbox .pill.save b{color:var(--red)}
+.potbox .pill.have b{color:var(--pine)}
+.potbox .pot-use{margin:12px auto 10px;max-width:430px;text-align:right;background:#fff;border:1.5px solid rgba(var(--pine-rgb),.16);border-radius:13px;padding:10px 14px}
+.potbox .use-cap{font-size:11.5px;font-weight:800;color:var(--pine);text-align:center;margin-bottom:7px;letter-spacing:.02em}
+.potbox .use-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px dashed rgba(var(--pine-rgb),.16);font-size:13.5px}
+.potbox .use-row:first-of-type{border-top:none}
+.potbox .use-l{font-weight:700;color:var(--ink-soft)}
+.potbox .use-v{font-weight:900;color:var(--pine-darker);font-variant-numeric:tabular-nums;white-space:nowrap}
+.potbox .use-sub{font-size:11.5px;font-weight:600;color:var(--ink-soft);opacity:.9;text-align:center;margin-top:6px}
+.potbox .use-row.miss .use-l{color:var(--pine-darker);font-weight:800}
+.potbox .use-row.miss .use-v{color:var(--red)}
+.potbox .pot-note{font-size:12px;font-weight:600;color:var(--ink-soft);line-height:1.45;max-width:450px;margin:0 auto}
+
+.breakdown{margin-top:14px;background:var(--card);border-radius:16px;box-shadow:var(--shadow);border:1px solid rgba(var(--pine-rgb),.10);padding:16px}
+.brk{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px dashed rgba(var(--pine-rgb),.16);font-size:14px}
+.brk:first-child{border-top:none}
+.brk .l{font-weight:700;color:var(--ink-soft)}
+.brk .v{font-weight:900;color:var(--ink);font-variant-numeric:tabular-nums}
+.brk.need .v{color:var(--pine-darker)}
+.brk.have .v{color:var(--pine)}
+.brk.gap{border-top:2px solid rgba(var(--pine-rgb),.28);margin-top:4px;padding-top:12px}
+.brk.gap .l{font-weight:900;color:var(--pine-darker);font-size:15px}
+.brk.gap .v{color:var(--red);font-size:18px}
+.brk.gap.ok .v{color:var(--pine)}
+
+.toggle{display:flex;align-items:flex-start;gap:10px;margin-top:14px;cursor:pointer;padding:12px 14px;background:var(--sage-tint);border-radius:12px;border:1.5px solid transparent;transition:border-color .15s}
+.toggle:hover{border-color:rgba(var(--pine-rgb),.3)}
+.toggle input{position:absolute;opacity:0;width:0;height:0}
+.tg-box{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid rgba(var(--pine-rgb),.4);background:#fff;position:relative;transition:all .15s;margin-top:1px}
+.toggle input:checked + .tg-box{background:var(--pine);border-color:var(--pine)}
+.toggle input:checked + .tg-box::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:900}
+.toggle input:focus-visible + .tg-box{outline:2px solid var(--pine);outline-offset:2px}
+.tg-txt{font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.4}
+.tg-txt b{color:var(--pine-deep)}
+
+.insight{margin-top:14px;background:linear-gradient(120deg,rgba(var(--sage-rgb),.30),rgba(var(--sage-rgb),.12));border:1px solid rgba(var(--pine-rgb),.22);border-radius:14px;padding:14px 16px;font-size:13.5px;font-weight:700;color:var(--pine-darker);line-height:1.5}
 
 .cta-card{margin-top:16px;background:linear-gradient(140deg,var(--pine),var(--pine-deep) 75%);border-radius:20px;padding:clamp(20px,4vw,28px);text-align:center;color:#fff;box-shadow:var(--shadow-hi);position:relative;overflow:hidden}
 .cta-card::after{content:"";position:absolute;inset:0;background:radial-gradient(400px 220px at 15% 0%,rgba(var(--sage-rgb),.35),transparent 60%);pointer-events:none}
@@ -88,12 +130,12 @@ body{font-family:var(--font);
 
 .foot{text-align:center;margin-top:24px;color:var(--ink-soft);font-size:12.5px;font-weight:500;line-height:1.7}
 .foot b{color:var(--pine-deep)}
+.copyright{margin-top:18px;padding-top:14px;border-top:1.5px solid rgba(var(--pine-rgb),.2);font-size:13.5px;font-weight:700;color:var(--pine-deep);line-height:1.6;max-width:480px;margin-inline:auto}
 .socials{display:flex;gap:11px;justify-content:center;margin:14px 0 8px}
 .socials a{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;border:1.5px solid rgba(var(--pine-rgb),.22);color:var(--pine-deep);box-shadow:var(--shadow);transition:all .18s}
 .socials a:hover{border-color:var(--pine);color:var(--pine);transform:translateY(-2px)}
 .socials svg{width:20px;height:20px}
 .foot-livuy{display:inline-block;margin-top:4px;font-size:13px;font-weight:800;color:var(--pine-deep);text-decoration:none;border-bottom:2px solid rgba(var(--pine-rgb),.3)}
-.copyright{margin-top:18px;padding-top:14px;border-top:1.5px solid rgba(var(--pine-rgb),.2);font-size:13.5px;font-weight:700;color:var(--pine-deep);line-height:1.6;max-width:480px;margin-inline:auto}
 </style>
 <!-- ═══════════════════════════════════════════════════════════════════
      ערכת נגישות לדפי נחיתה - קטע הקוד שמדביקים בכל דף
@@ -112,9 +154,8 @@ body{font-family:var(--font);
   /* Keyboard-only focus - mouse users never see this */
   :focus-visible { outline: 3px solid #4F46E5 !important; outline-offset: 2px !important; border-radius: 4px; }
   /* text fields use their own green focus ring (keeps ₪ visible), not the indigo box */
-  .amt input:focus, .amt input:focus-visible,
-  .act-link input:focus, .act-link input:focus-visible,
-  .lbl:focus, .lbl:focus-visible { outline: none !important; }
+  .input-shell input:focus, .input-shell input:focus-visible,
+  .act-link input:focus, .act-link input:focus-visible { outline: none !important; }
   /* Skip link - visible only on keyboard focus */
   .brain-skip { position: fixed; top: -60px; right: 12px; z-index: 100000; background: #1E1B4B; color: #fff;
     padding: 10px 18px; border-radius: 10px; font-size: 15px; text-decoration: none; transition: top .15s; }
@@ -194,7 +235,7 @@ body{font-family:var(--font);
       menu.querySelectorAll("[aria-pressed]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); }); };
     menu.appendChild(reset);
     var link = document.createElement("a");
-    link.href = "https://talibifinance-del.github.io/richlife-lida/negishut.html"; link.textContent = "הצהרת נגישות";
+    link.href = "https://lida.richlife.co.il/machshevonim/negishut.html"; link.textContent = "הצהרת נגישות";
     menu.appendChild(link);
 
     // Permanent text link in the page footer (legal best practice: the statement
@@ -203,7 +244,7 @@ body{font-family:var(--font);
     var foot = document.querySelector("footer");
     if (foot && !foot.querySelector('a[href*="negishut"]')) {
       var fl = document.createElement("a");
-      fl.href = "https://talibifinance-del.github.io/richlife-lida/negishut.html"; fl.textContent = "הצהרת נגישות";
+      fl.href = "https://lida.richlife.co.il/machshevonim/negishut.html"; fl.textContent = "הצהרת נגישות";
       fl.style.color = "inherit"; fl.style.marginRight = "6px";
       foot.appendChild(document.createTextNode(" · "));
       foot.appendChild(fl);
@@ -252,37 +293,73 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   </div>
 
   <div class="hero-title">
-    <h1>כמה עולה <span class="em">חודש עם תינוק/ת</span></h1>
-    <p>ההוצאה החודשית השוטפת מכאן והלאה. ממלאים כמה כל דבר עולה לכם, ורואים את השורה התחתונה - לחודש ולשנה.</p>
-    <div class="livuy-wrap"><a class="livuy-cta" href="https://richlife.ravpage.co.il/service1one1" target="_blank" rel="noopener">✨ לתהליך ליווי אישי עם טלי ←</a></div>
-  </div>
-
-  <div class="hero">
-    <div class="h-lbl">👶 עלות חודשית עם תינוק/ת</div>
-    <div class="h-num" id="heroMonth">0<small> ₪</small></div>
-    <div class="h-meta">= <b id="heroYear">0 ₪</b> בשנה</div>
+    <h1>תכנון כלכלי <span class="em">לחופשת הלידה</span></h1>
+    <p>כמה להפריש כל חודש כדי להגיע ללידה רגועים - עם כסף לציוד ולחודשים בבית עם התינוק/ת.</p>
+    <div class="livuy-wrap"><a class="livuy-cta" href="https://calendar.app.google/6YeWfsc6nfo25yhK7" target="_blank" rel="noopener">✨ לתהליך ליווי אישי עם טלי ←</a></div>
   </div>
 
   <div class="card">
-    <h2>ההוצאות החודשיות</h2>
-    <div class="sub">המספרים שלכם - כל משפחה שונה. מה שלא רלוונטי, השאירו על 0.</div>
-    <div id="rows"></div>
-    <button class="addline" id="addBtn">＋ הוסף הוצאה</button>
+    <h2>🍼 כמה תצטרכו</h2>
+    <div id="grpNeed"></div>
   </div>
+
+  <div class="card">
+    <h2>💰 מה כבר יש לכם (ומה נכנס)</h2>
+    <div id="grpHave"></div>
+  </div>
+
+  <div class="card">
+    <h2>🗓️ כמה זמן לחסוך</h2>
+    <div id="grpWhen"></div>
+    <label class="toggle"><input type="checkbox" id="bufferChk"><span class="tg-box"></span><span class="tg-txt"><b>כרית ביטחון</b> - להוסיף חודש מחיה נוסף, שהתכנון לא יהיה עד השקל האחרון</span></label>
+  </div>
+
+  <div class="hero" id="hero">
+    <div class="h-lbl">💚 כמה להפריש כל חודש עד הלידה</div>
+    <div class="h-num" id="heroNum">0<small> ₪</small></div>
+    <div class="h-meta" id="heroMeta">מלאו את השדות כדי לראות</div>
+  </div>
+
+  <div class="potbox" id="potbox">
+    <div class="pot-lbl">🎯 כמה סה"כ צריך שיהיה בקופה לחופשת הלידה</div>
+    <div class="pot-num" id="potNum">0<small> ₪</small></div>
+    <div class="pot-use">
+      <div class="use-cap">מאיפה הכסף בקופה</div>
+      <div class="use-row"><span class="use-l">🏛️ דמי לידה + מענק<span id="srcStateTag" style="color:var(--pine);font-weight:700"></span></span><span class="use-v" id="srcState">0 ₪</span></div>
+      <div class="use-row" id="srcHelpRow"><span class="use-l">🤝 עזרה מההורים</span><span class="use-v" id="srcHelp">0 ₪</span></div>
+      <div class="use-row" id="srcHaveRow"><span class="use-l">💰 כבר יש לנו</span><span class="use-v" id="srcHave">0 ₪</span></div>
+      <div class="use-row miss" id="srcMissRow"><span class="use-l">🎯 חסר לחסוך</span><span class="use-v" id="srcMiss">0 ₪</span></div>
+    </div>
+    <div class="pot-use">
+      <div class="use-cap">לאן הקופה הולכת</div>
+      <div class="use-row"><span class="use-l">🍼 ציוד לתינוק/ת (חד-פעמי)</span><span class="use-v" id="useEquip">0 ₪</span></div>
+      <div class="use-row"><span class="use-l">🏠 מחיה — משיכה כל חודש</span><span class="use-v" id="useLivingM">0 ₪</span></div>
+      <div class="use-sub" id="useSub"></div>
+    </div>
+    <div class="pot-note">זו כל הקרן שתחיו ממנה בחופשה: דמי הלידה, המענק, העזרה ומה שכבר בצד - הכל נכנס לקופה, ומושכים ממנה כל חודש. הכנסת בן/בת הזוג ממשיכה להיכנס בנפרד וממשיכה כרגיל.</div>
+  </div>
+
+  <div class="breakdown">
+    <div class="brk need"><span class="l">💸 סה"כ שצריך (ציוד + מחיה בחופשה)</span><span class="v" id="bNeed">0 ₪</span></div>
+    <div class="brk have"><span class="l">🟢 סה"כ מקורות (דמי לידה, מענק, עזרה, חיסכון, הכנסת בן/בת זוג)</span><span class="v" id="bHave">0 ₪</span></div>
+    <div class="brk gap" id="bGapRow"><span class="l">🎯 חסר לחסוך עד הלידה</span><span class="v" id="bGap">0 ₪</span></div>
+  </div>
+
+  <div class="insight" id="insight" hidden></div>
 
   <div class="cta-card">
     <div class="cta-emoji">🌱</div>
-    <h3>רואים כמה זה מצטבר כל חודש?</h3>
-    <p>תינוק/ת זו הוצאה חדשה וקבועה, ולצידה חופשת לידה עם פחות הכנסה. לתכנן את זה מראש, בלי לחץ ובלי הפתעות - זה בדיוק מה שאנחנו עושים יחד בתהליך ליווי אישי.</p>
-    <a class="cta-btn" href="https://richlife.ravpage.co.il/service1one1" target="_blank" rel="noopener">בואו נתכנן את זה יחד ←</a>
+    <h3>רואים את המספר, אבל לא בטוחים איך מגיעים אליו?</h3>
+    <p>לחסוך סכום כזה מהמשכורת לבד זה קשה, ולפעמים מרגיש בלתי אפשרי. אבל יש דרכים חכמות יותר מלשים כסף בצד בעו"ש - לתכנן נכון, לסדר את ההוצאות, ולתת לכסף להתחיל לעבוד בשבילכם. זה בדיוק מה שאנחנו בונים יחד, צעד אחר צעד.</p>
+    <a class="cta-btn" href="https://calendar.app.google/6YeWfsc6nfo25yhK7" target="_blank" rel="noopener">רוצים להגיע ללידה בראש שקט? בואו נבנה את זה יחד ←</a>
   </div>
 
-  <div class="disclaimer"><span>💡</span><span>הערכה לתכנון בלבד. חלק מההוצאות (מעון, מזון) מתחילות מאוחר יותר - שווה לתכנן אותן כבר עכשיו.</span></div>
+  <div class="disclaimer"><span>⚠️</span><span>הערכה לתכנון בלבד, לא ייעוץ. המספרים תלויים במה שתזינו. הכלי עוזר להבין את התמונה ולתכנן קדימה.</span></div>
 
   <div class="actions">
-    <button class="act-btn" id="shareBtn">🔗 שמירה ושליחת החישוב</button>
-    <div class="act-note">✓ נשמר אוטומטית במכשיר. הקישור מכיל את החישוב - לשליחה בוואטסאפ ופתיחה חוזרת בלי למלא מחדש.</div>
-    <div class="act-link" id="actLink" hidden><input id="linkField" readonly aria-label="קישור החישוב"><button id="copyBtn">העתקה</button></div>
+    <button class="act-btn" id="shareBtn">🔗 שמירה ושליחת התכנון</button>
+    <div class="act-note">✓ נשמר אוטומטית במכשיר. הקישור מכיל את כל התכנון - לשליחה בוואטסאפ ופתיחה חוזרת בלי למלא מחדש.</div>
+    <div class="act-link" id="actLink" hidden><input id="linkField" readonly aria-label="קישור התכנון"><button id="copyBtn">העתקה</button></div>
   </div>
 
   <div class="foot">
@@ -292,7 +369,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
       <a href="https://www.instagram.com/tali_finance" target="_blank" rel="noopener" aria-label="אינסטגרם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
       <a href="https://www.tiktok.com/@tali_beniaminov" target="_blank" rel="noopener" aria-label="טיקטוק"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 3c.3 2 1.6 3.4 3.5 3.6v2.4c-1.2 0-2.4-.4-3.4-1v6.3c0 3-2.2 5.2-5.1 5.2-2.7 0-4.9-2-4.9-4.7 0-2.8 2.3-4.8 5.1-4.6v2.5c-.3-.1-.6-.1-.9-.1-1.2 0-2.1.9-2.1 2.1 0 1.3 1 2.2 2.3 2.2 1.4 0 2.3-1 2.3-2.6V3h3.2z"/></svg></a>
     </div>
-    <a class="foot-livuy" href="https://richlife.ravpage.co.il/service1one1" target="_blank" rel="noopener">לתהליכי הליווי שלי ←</a>
+    <a class="foot-livuy" href="https://calendar.app.google/6YeWfsc6nfo25yhK7" target="_blank" rel="noopener">לתהליכי הליווי שלי ←</a>
     <div class="copyright">© 2026 כל הזכויות שמורות ל-RichLife ולטלי בנימינוב שרעבי. אין לשכפל, להפיץ או לעשות שימוש בתוכן זה ללא אישור מראש ובכתב.</div>
   </div>
 
@@ -301,57 +378,133 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script>
 const fmt=new Intl.NumberFormat('he-IL',{maximumFractionDigits:0});
 const money=v=>fmt.format(Math.round(+v||0));
-let uid=0, items=[];
-// [emoji, label, hint]
-const SEED=[
-  ['🧷','חיתולים',''],
-  ['💧','מגבונים לחים',''],
-  ['🍼','פורמולה / תחליף','0 אם מניקים מלא'],
-  ['🥣','מזון והתחלת מוצקים','מתחיל בערך מגיל חצי שנה'],
-  ['👕','ביגוד (גדלים מהר)',''],
-  ['🧴','קרמים ומוצרי היגיינה',''],
-  ['💊','ויטמין D / תרופות',''],
-  ['🏥','ביטוח בריאות / משלים לתינוק',''],
-  ['🏠','מעון / משפחתון / מטפלת','אחרי חופשת הלידה'],
-  ['💰','חיסכון חודשי לתינוק/ת',''],
-  ['🎈','פעילויות / העשרה',''],
-  ['✨','שונות והפתעות','']
-];
-function seed(){return SEED.map(([e,l,h])=>({id:++uid,e,l,h,a:''}));}
+// שיעורי ביטוח לאומי (למשיכה מדמי לידה) - מתעדכן אוטומטית פעם בחצי שנה
+const RATES={grant:{first:2103,second:946,third:631,twins:10514,triplets:15771},capDaily:1752.33};
 
-function total(){return items.reduce((s,it)=>s+(+it.a||0),0);}
-function render(){
-  const box=document.getElementById('rows');
-  box.innerHTML='';
-  items.forEach(it=>box.appendChild(row(it)));
-  recompute();
+const FIELDS=[
+  {g:'grpNeed',k:'equip',l:'תקציב ציוד לתינוק/ת (חד-פעמי)',h:'עריסה, עגלה, ציוד לידה. אפשר להיעזר במחשבון רשימת הקניות.'},
+  {g:'grpNeed',k:'living',l:'עלות מחיה חודשית של המשפחה',h:'כמה עולה לכם חודש רגיל היום (שכירות, אוכל, קבועות).'},
+  {g:'grpNeed',k:'extra',l:'תוספת חודשית לתינוק/ת',h:'טיטולים, מזון, ביגוד וכו שמצטרפים עם הלידה.'},
+  {g:'grpNeed',k:'monthsHome',l:'כמה חודשים אשאר בבית עם התינוק/ת',suf:'חודשים'},
+  {g:'grpHave',k:'spouse',l:'הכנסת בן/בת הזוג נטו לחודש',h:'ההכנסה שממשיכה להיכנס בזמן החופשה. אפשר להוסיף כאן גם הכנסות נוספות.'},
+  {g:'grpHave',k:'allowance',l:'דמי לידה (סה"כ)',prefill:true,netToggle:true,h:'מהמחשבון דמי לידה, וזה סכום <b>ברוטו</b>. בבנק נכנס פחות: מנכים מס הכנסה ו-~4-12% ביטוח לאומי ובריאות. חלק גדול ממס ההכנסה חוזר אחר כך כ<a href="https://lida.richlife.co.il/machshevonim/refund-tracker/" target="_blank" rel="noopener" style="color:var(--pine-deep);font-weight:800">החזר מס</a>.'},
+  {g:'grpHave',k:'grant',l:'מענק לידה'},
+  {g:'grpHave',k:'help',l:'עזרה מההורים (חד-פעמי)'},
+  {g:'grpHave',k:'side',l:'כסף שכבר יש בצד'},
+  {g:'grpWhen',k:'monthsSave',l:'כמה חודשים יש לי לחסוך עד הלידה',suf:'חודשים'},
+];
+let S={equip:'',living:'',extra:'',monthsHome:'',spouse:'',allowance:'',grant:'',help:'',side:'',monthsSave:'',buffer:false,netConservative:false};
+
+function buildFields(){
+  FIELDS.forEach(f=>{
+    const wrap=document.createElement('div');
+    wrap.className='field';
+    const suf=f.suf?`<span class="unit suf">${f.suf}</span>`:'';
+    const pre=f.suf?'':'<span class="unit">₪</span>';
+    wrap.innerHTML=`<label>${f.l}</label>
+      <div class="input-shell">${pre}<input class="tabular" type="text" inputmode="numeric" id="f_${f.k}" placeholder="0">${suf}</div>
+      ${f.prefill?'<button class="prefill" id="prefillBtn">📥 משכו מהמחשבון דמי לידה</button>':''}
+      ${f.h?`<div class="hint">${f.h}</div>`:''}
+      ${f.netToggle?'<label class="toggle" style="margin-top:9px"><input type="checkbox" id="netChk"><span class="tg-box"></span><span class="tg-txt"><b>לתכנן לפי נטו זהיר (~85%)</b> - להיערך על הצד הבטוח, כאילו נכנס פחות. עדיף להפתיע לטובה. אפשר להסיר בכל רגע.</span></label>':''}`;
+    document.getElementById(f.g).appendChild(wrap);
+    const inp=wrap.querySelector('input');
+    inp.addEventListener('input',e=>{const raw=e.target.value.replace(/[^\d]/g,'');S[f.k]=raw===''?'':+raw;e.target.value=raw===''?'':money(raw);paint();});
+  });
+  const pb=document.getElementById('prefillBtn');
+  if(pb) pb.onclick=prefillFromMaternity;
+  const nc=document.getElementById('netChk');
+  if(nc) nc.addEventListener('change',e=>{S.netConservative=e.target.checked;paint();});
 }
-function row(it){
-  const el=document.createElement('div');
-  el.className='row';
-  el.innerHTML=`<span class="emoji">${it.e||'•'}</span>
-    <input class="lbl" value="${esc(it.l)}" placeholder="שם ההוצאה">
-    <div class="amt"><span class="u">₪</span><input class="tabular" inputmode="numeric" value="${it.a?money(it.a):''}" placeholder="0"></div>
-    <button class="del" title="מחק">✕</button>`;
-  el.querySelector('.lbl').addEventListener('input',e=>{it.l=e.target.value;persist();});
-  el.querySelector('.amt input').addEventListener('input',e=>{const raw=e.target.value.replace(/[^\d]/g,'');it.a=raw===''?'':+raw;e.target.value=raw===''?'':money(raw);recompute();persist();});
-  el.querySelector('.del').onclick=()=>{items=items.filter(x=>x.id!==it.id);render();persist();};
-  if(it.h){const h=document.createElement('div');h.className='hint-line';h.textContent=it.h;el.appendChild(h);}
-  return el;
+
+function calc(){
+  const n=k=>+S[k]||0;
+  const allowanceUsed=S.netConservative?Math.round(n('allowance')*0.85):n('allowance'); // נטו זהיר: דמי הלידה ברוטו, מנכים ~15% (מס+ב"ל/בריאות) לתכנון בטוח. המענק פטור ממס, לא נוגעים בו
+  const buf=S.buffer?(n('living')+n('extra')):0; // כרית ביטחון = חודש מחיה נוסף
+  const needTotal=n('equip')+n('monthsHome')*(n('living')+n('extra'))+buf;
+  const sources=allowanceUsed+n('grant')+n('help')+n('side')+n('spouse')*n('monthsHome');
+  const gap=Math.max(0,needTotal-sources);
+  // דמי הלידה נכנסים לתוך הקופה. "כבר יש ובדרך" = כסף שכבר ברשותך או שנוחת (דמי לידה+מענק+עזרה+מה שבצד)
+  const coveredIn=allowanceUsed+n('grant')+n('help')+n('side');
+  const pot=coveredIn+gap; // הקרן שתחיו ממנה בחופשה, כולל דמי הלידה בפנים
+  // פירוק הקופה לפי יעד: הציוד יוצא פעם אחת, השאר נמשך חודש-חודש למחיה לאורך חודשי החופשה
+  const potEquip=Math.min(n('equip'),pot);
+  const potLiving=pot-potEquip;
+  const livingMonthly=n('monthsHome')>0?Math.round(potLiving/n('monthsHome')):0;
+  const stateMoney=allowanceUsed+n('grant'); // X = דמי לידה + מענק
+  const netCons=!!S.netConservative;
+  const saveMoney=n('side')+gap;              // Q = חיסכון (כבר בצד + עוד לחסוך)
+  const covered=needTotal>0 && sources>=needTotal;
+  const monthly=n('monthsSave')>0?Math.round(gap/n('monthsSave')):0;
+  return {needTotal,sources,gap,pot,coveredIn,side:n('side'),stateMoney,netCons,help:n('help'),saveMoney,potEquip,potLiving,livingMonthly,monthsHome:n('monthsHome'),covered,monthly,months:n('monthsSave')};
 }
-function recompute(){
-  const t=total();
-  document.getElementById('heroMonth').innerHTML=money(t)+'<small> ₪</small>';
-  document.getElementById('heroYear').textContent=money(t*12)+' ₪';
+function insightText(c){
+  const n=k=>+S[k]||0;
+  if(c.needTotal<=0) return '';
+  if(c.covered) return 'יש לכם כרית 💚 המקורות מכסים את כל התקופה. שווה לשקול חודש נוסף בבית עם התינוק/ת, או להשאיר את העודף ככרית ביטחון.';
+  if(!(n('monthsSave')>0)) return 'הזינו כמה חודשים יש עד הלידה, ותראו כמה צריך להפריש כל חודש.';
+  if(n('spouse')>0 && c.monthly>0.5*n('spouse')) return 'זה חיסכון משמעותי ביחס להכנסה. שתי דרכים להקל: להתחיל לחסוך מוקדם יותר (עוד חודשים), או לתכנן חזרה מעט מוקדמת לעבודה.';
+  if(n('monthsHome')>=4 && n('allowance')>0) return 'שימו לב: דמי הלידה מכסים כ-3.5 החודשים הראשונים. אחריהם ההוצאה נשענת על החיסכון שתצברו, ולכן חשוב להגיע ללידה עם הקופה מוכנה.';
+  return 'תוכנית ריאלית 💚 להפריש את הסכום הזה כל חודש, ולהגיע ללידה עם קופה מסודרת ורוגע.';
 }
-function esc(s){return (s||'').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
-document.getElementById('addBtn').onclick=()=>{items.push({id:++uid,e:'•',l:'',h:'',a:''});render();persist();};
+function paint(){
+  const c=calc();
+  const hero=document.getElementById('hero');
+  if(c.covered){
+    hero.className='hero covered';
+    document.getElementById('heroNum').innerHTML='אתם מכוסים 🎉';
+    document.getElementById('heroMeta').textContent='המקורות מכסים את כל הצרכים לתקופה. אין צורך לחסוך נוסף.';
+  }else{
+    hero.className='hero';
+    document.getElementById('heroNum').innerHTML=money(c.monthly)+'<small> ₪</small>';
+    document.getElementById('heroMeta').textContent = (c.gap>0 && c.months>0)
+      ? `כדי לחסוך ${money(c.gap)} ₪ תוך ${c.months} חודשים`
+      : 'מלאו את השדות (כולל חודשים לחסוך) כדי לראות';
+  }
+  document.getElementById('bNeed').textContent=money(c.needTotal)+' ₪';
+  document.getElementById('bHave').textContent=money(c.sources)+' ₪';
+  document.getElementById('bGap').textContent=money(c.gap)+' ₪';
+  document.getElementById('bGapRow').className='brk gap'+(c.gap<=0?' ok':'');
+  document.getElementById('potNum').innerHTML=money(c.pot)+'<small> ₪</small>';
+  document.getElementById('srcState').textContent=money(c.stateMoney)+' ₪';
+  document.getElementById('srcStateTag').textContent=c.netCons?' (נטו זהיר)':'';
+  document.getElementById('srcHelp').textContent=money(c.help)+' ₪';
+  document.getElementById('srcHelpRow').style.display=c.help>0?'':'none';
+  document.getElementById('srcHave').textContent=money(c.side)+' ₪';
+  document.getElementById('srcHaveRow').style.display=c.side>0?'':'none';
+  document.getElementById('srcMiss').textContent=money(c.gap)+' ₪';
+  document.getElementById('srcMissRow').style.display=c.gap>0?'':'none';
+  document.getElementById('useEquip').textContent=money(c.potEquip)+' ₪';
+  document.getElementById('useLivingM').textContent=money(c.livingMonthly)+' ₪';
+  document.getElementById('useSub').textContent = c.potLiving>0
+    ? (c.monthsHome>0 ? `לאורך ${c.monthsHome} חודשי החופשה · סה"כ ${money(c.potLiving)} ₪ למחיה` : `סה"כ ${money(c.potLiving)} ₪ למחיה`)
+    : 'המחיה בחופשה מכוסה מההכנסה השוטפת שנכנסת';
+  const ins=document.getElementById('insight'); const txt=insightText(c);
+  ins.textContent=txt; ins.hidden=!txt;
+  save();
+}
+
+function prefillFromMaternity(){
+  let raw=null; try{raw=localStorage.getItem('richlife-maternity-v1');}catch(e){}
+  const btn=document.getElementById('prefillBtn');
+  const flash=(m)=>{const o=btn.textContent;btn.textContent=m;setTimeout(()=>btn.textContent=o,1900);};
+  if(!raw){flash('לא נמצא חישוב - מלאו קודם את מחשבון דמי לידה');return;}
+  try{
+    const a=JSON.parse(raw); const gross=+a[0]||0, days=a[1]||105, birth=a[2]||'first';
+    const daily=gross>0?Math.round(Math.min(gross/30,RATES.capDaily)):0;
+    const allowance=daily*days; const grant=RATES.grant[birth]||0;
+    S.allowance=allowance; S.grant=grant;
+    document.getElementById('f_allowance').value=allowance?money(allowance):'';
+    document.getElementById('f_grant').value=grant?money(grant):'';
+    paint(); flash('✓ נמשך מדמי לידה');
+  }catch(e){flash('שגיאה במשיכה');}
+}
 
 // save / share
-const SKEY='richlife-monthlybaby-v1';
-function enc(){return JSON.stringify(items.map(it=>[it.e,it.l,it.h,it.a]));}
-function persist(){try{localStorage.setItem(SKEY,enc());}catch(e){}syncLive();}
-function dec(str){try{const a=JSON.parse(str);if(!Array.isArray(a))return null;return a.map(x=>({id:++uid,e:x[0]||'•',l:x[1]||'',h:x[2]||'',a:x[3]??''}));}catch(e){return null;}}
+const SKEY='richlife-leaveplan-v1';
+const ORDER=['equip','living','extra','monthsHome','spouse','allowance','grant','help','side','monthsSave','buffer','netConservative'];
+function enc(){return JSON.stringify(ORDER.map(k=>S[k]));}
+function save(){try{localStorage.setItem(SKEY,enc());}catch(e){}syncLive();}
+function dec(str){try{const a=JSON.parse(str);ORDER.forEach((k,i)=>S[k]=a[i]??'');return true;}catch(e){return false;}}
 const SHARE_API='https://richlife-share.tali-bi-finance.workers.dev';
 function makeLink(){return location.origin+location.pathname+location.search+'#s='+encodeURIComponent(enc());}
 async function shortLink(){try{const r=await fetch(SHARE_API,{method:'POST',body:enc()});if(!r.ok)throw 0;const j=await r.json();if(!j||!j.id)throw 0;return location.origin+location.pathname+location.search+'#p='+j.id;}catch(e){return makeLink();}}
@@ -369,17 +522,22 @@ function refreshShareUI(){var btn=document.getElementById('shareBtn');if(!btn)re
 })();
 
 // boot
+buildFields();
+document.getElementById('bufferChk').addEventListener('change',e=>{S.buffer=e.target.checked;paint();});
 (function(){
-  let loaded=null;
+  let loaded=false;
   const h=(location.hash||'').match(/s=([^&]+)/);
   if(h){loaded=dec(decodeURIComponent(h[1]));}
-  let fromLink=!!(loaded&&loaded.length);
-  if(!fromLink){const ls=(function(){try{return localStorage.getItem(SKEY);}catch(e){return null;}})();if(ls)loaded=dec(ls);}
-  items=(loaded&&loaded.length)?loaded:seed();
-  render();
-  if(fromLink){persist();}
+  if(!loaded){const ls=(function(){try{return localStorage.getItem(SKEY);}catch(e){return null;}})();if(ls)loaded=dec(ls);}
+  if(loaded){
+    ORDER.forEach(k=>{const el=document.getElementById('f_'+k);if(el&&S[k]!==''&&typeof S[k]!=='boolean')el.value=money(S[k]);});
+    document.getElementById('bufferChk').checked=!!S.buffer;
+    const nc=document.getElementById('netChk');if(nc)nc.checked=!!S.netConservative;
+  }
+  paint();
+  if(h){}
 })();
-(function(){var hp=(location.hash||'').match(/p=([0-9A-Za-z]{4,16})/);if(!hp){refreshShareUI();return;}docId=hp[1];refreshShareUI();fetch(SHARE_API+'/?id='+encodeURIComponent(hp[1])).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){var d=dec(t);if(d&&d.length){items=d;render();persist();}}).catch(function(){});})();
+(function(){var hp=(location.hash||'').match(/p=([0-9A-Za-z]{4,16})/);if(!hp){refreshShareUI();return;}docId=hp[1];refreshShareUI();fetch(SHARE_API+'/?id='+encodeURIComponent(hp[1])).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){if(dec(t)){ORDER.forEach(function(k){var el=document.getElementById('f_'+k);if(el&&S[k]!==''&&typeof S[k]!=='boolean')el.value=money(S[k]);});document.getElementById('bufferChk').checked=!!S.buffer;var nc=document.getElementById('netChk');if(nc)nc.checked=!!S.netConservative;}paint();}).catch(function(){});})();
 </script>
 </body>
 </html>
