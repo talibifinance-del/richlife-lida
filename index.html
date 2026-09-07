@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta name="robots" content="noindex,nofollow">
 <meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>כמה אתם מוכנים כלכלית לתינוק? | RichLife</title>
 <!-- Meta Pixel -->
@@ -119,15 +119,34 @@ src="https://www.facebook.com/tr?id=208911198828875&ev=PageView&noscript=1"/></n
   .insights .ic{font-size:22px;line-height:1.3;flex:0 0 auto}
   .insights .tx{flex:1;min-width:0}
   .insights li b{color:var(--green)}
-  .tease{margin-top:16px;background:var(--green);color:#fff;border-radius:14px;padding:15px 16px;font-size:15.5px;font-weight:700;text-align:center;line-height:1.5}
+  .tease{display:block;margin-top:16px;background:var(--green);color:#fff;border-radius:16px;padding:16px 16px 18px;font-size:15.5px;font-weight:700;text-align:center;line-height:1.5;
+    text-decoration:none;box-shadow:0 14px 34px rgba(26,61,54,.22);transition:transform .18s ease,box-shadow .18s ease}
+  .tease:hover{transform:translateY(-3px);box-shadow:0 20px 44px rgba(26,61,54,.30)}
+  .tease:focus-visible{outline:3px solid var(--brass);outline-offset:3px}
+  .tease .tease-txt{display:block}
+  .tease .tease-img{display:block;width:100%;max-width:400px;margin:13px auto 12px;border-radius:12px;
+    box-shadow:0 10px 26px rgba(0,0,0,.28);background:#eef4ef}
+  .tease .tease-go{display:inline-block;background:#eef4ef;color:#1a3d36;border-radius:100px;
+    padding:13px 28px;font-size:16px;font-weight:800;box-shadow:0 8px 20px rgba(0,0,0,.22);
+    max-width:100%;text-wrap:balance}
+  .tease:hover .tease-go{background:#fff}
+  .cta-img{display:block;width:100%;max-width:430px;margin:0 auto 18px;border-radius:14px;
+    box-shadow:0 14px 34px rgba(0,0,0,.30);background:#eef4ef}
   .urg{border-inline-start:4px solid var(--brass);background:#fdf9f0;padding:12px 16px;
     border-radius:10px;margin:0 0 22px;font-weight:600}
   .cta{background:var(--green);color:#fff;border-radius:18px;padding:24px 22px;text-align:center}
   .cta h2{margin:0 0 8px;font-size:21px}
   .cta p{margin:0 0 16px;color:#d6e6e0;font-size:15px}
-  .cta a{display:inline-block;background:#eef4ef;color:#243a30;text-decoration:none;
-    font-weight:800;padding:14px 32px;border-radius:100px;font-size:16px}
-  .cta a:hover{background:#dbe8de}
+  .cta a{display:inline-block;background:#eef4ef;color:#1a3d36;text-decoration:none;
+    font-weight:900;padding:17px 34px;border-radius:100px;font-size:17px;letter-spacing:-.3px;
+    box-shadow:0 12px 28px rgba(0,0,0,.28);transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+    max-width:100%;text-wrap:balance;
+    animation:ctaPulse 2.6s ease-in-out infinite}
+  .cta a:hover{background:#fff;transform:translateY(-3px);box-shadow:0 18px 38px rgba(0,0,0,.34);animation:none}
+  .cta a:focus-visible{outline:3px solid var(--brass);outline-offset:3px;animation:none}
+  @keyframes ctaPulse{0%,100%{box-shadow:0 12px 28px rgba(0,0,0,.28),0 0 0 0 rgba(238,244,239,.42)}
+    55%{box-shadow:0 12px 28px rgba(0,0,0,.28),0 0 0 13px rgba(238,244,239,0)}}
+  @media (prefers-reduced-motion:reduce){.cta a{animation:none}.tease,.cta a{transition:none}}
   .hidden{display:none}
   .center{text-align:center}
   .lead2{font-weight:700;color:var(--ink);font-size:17px;margin:14px 0 12px}
@@ -530,7 +549,14 @@ function showResult(){
     let html = "<ul class='insights'>";
   items.forEach(function(o){ html += "<li><span class='ic'>"+o.e+"</span><span class='tx'>"+o.t+"</span></li>"; });
   html += "</ul>";
-  html += "<div class='tease'>"+(tier.n<=3 ? "המספר המדויק שלכם, והתוכנית המלאה שלב-אחר-שלב, מחכים לכם במדריך 👇" : "אתם מוכנים. ואם תרצו רק לוודא שלא פספסתם כלום, הצעד האחרון מחכה למטה 👇")+"</div>";
+  const teaseTxt = tier.n<=3
+    ? "המספר המדויק שלכם, והתוכנית המלאה שלב-אחר-שלב, מחכים לכם בקורס 👇"
+    : "אתם מוכנים. ואם תרצו רק לוודא שלא פספסתם כלום, הצעד האחרון מחכה כאן 👇";
+  html += "<a class='tease' href='"+GUIDE_URL+"'>"+
+            "<span class='tease-txt'>"+teaseTxt+"</span>"+
+            "<img class='tease-img' src='images/course-mockup.jpg' alt='הקורס מוכנים כלכלית ללידה, מוצג במחשב ובנייד' loading='lazy'>"+
+            "<span class='tease-go'>לקורס מוכנים כלכלית ללידה ←</span>"+
+          "</a>";
   el('r_personal').innerHTML = html;
 
   const gbox=el('r_gaps_box');
@@ -547,19 +573,21 @@ function showResult(){
   let cta;
   if(tier.n<=3){
     cta='<h2>עכשיו, איך סוגרים את הפערים האלה?</h2>'+
-        '<p style="text-align:right">המדריך "מתכוננים ללידה כלכלית" נותן לכם בדיוק את זה:</p>'+
+        '<p style="text-align:right">הקורס "מוכנים כלכלית ללידה" נותן לכם בדיוק את זה:</p>'+
         '<ul style="text-align:right;margin:0 0 16px;padding-inline-start:18px;color:#eaf3ef;font-size:15px;line-height:1.85">'+
           '<li>מחשבון קרן חופשת לידה שמראה את <b>המספר המדויק שלכם</b></li>'+
           '<li>איך לחשב כמה תקבלי בדמי לידה, הנוסחה המדויקת</li>'+
           '<li>אילו ביטוחים לעשות <b>עוד לפני ההיריון</b> כדי לחסוך אלפי שקלים</li>'+
           '<li>כל הזכויות, וגם איך לבנות לתינוק עתיד כלכלי, שלב-אחר-שלב</li>'+
         '</ul>'+
-        '<a href="'+GUIDE_URL+'">למדריך המלא ←</a>';
+        '<img class="cta-img" src="images/course-mockup.jpg" alt="הקורס מוכנים כלכלית ללידה, מוצג במחשב ובנייד" loading="lazy">'+
+        '<a href="'+GUIDE_URL+'">לקורס מוכנים כלכלית ללידה ←</a>';
   } else {
     cta='<h2>כל הכבוד, אתם באמת מוכנים 🤍</h2>'+
         '<p style="text-align:right">אתם מהמעטים שמגיעים לרגע הזה מסודרים: כרית ביטחון, חיסכון לילד, וידע בזכויות. אין לנו הרבה מה להוסיף, חוץ מברכה גדולה.</p>'+
-        '<p style="text-align:right">ואם תרצו רק לוודא שלא פספסתם אף זכות או הטבה, המדריך הוא צ׳ק-ליסט מסודר שייתן לכם ראש שקט לגמרי.</p>'+
-        '<a href="'+GUIDE_URL+'">למדריך, לוודא שלא פספסתם ←</a>';
+        '<p style="text-align:right">ואם תרצו רק לוודא שלא פספסתם אף זכות או הטבה, הקורס הוא צ׳ק-ליסט מסודר שייתן לכם ראש שקט לגמרי.</p>'+
+        '<img class="cta-img" src="images/course-mockup.jpg" alt="הקורס מוכנים כלכלית ללידה, מוצג במחשב ובנייד" loading="lazy">'+
+        '<a href="'+GUIDE_URL+'">לקורס, לוודא שלא פספסתם ←</a>';
   }
   el('r_cta').innerHTML = cta;
 
