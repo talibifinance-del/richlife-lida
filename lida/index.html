@@ -238,79 +238,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
     <p>כל הכלים להיערכות כלכלית ללידה, יד ביד. בחרי מחשבון והתחילי - מה שתמלאי נשמר, ואפשר לעבור בין הכלים.</p>
   </div>
 
-  <div class="grid">
-    <a class="tool" href="./checklist/" target="_blank" rel="noopener">
-      <div class="ico">✅</div>
-      <div class="body">
-        <h3>הצ'ק-ליסט הכלכלי ללידה</h3>
-        <p>כל המשימות במקום אחד, לפי השלבים: מה לעשות לפני, בזמן ואחרי. עם שם אישי ומעקב התקדמות.</p>
-      </div>
-      <div class="go">←</div>
-    </a>
-
-    <a class="tool" href="./couples-map/" target="_blank" rel="noopener">
-      <div class="ico">💬</div>
-      <div class="body">
-        <h3>מפת הכסף הזוגית</h3>
-        <p>לפני המספרים: מה כסף מייצג לכל אחד מכם, אילו אמונות ירשתם, ומה הערך שמוביל אתכם. ואז הגשר שנותן מקום לשניכם, בלי לריב.</p>
-      </div>
-      <div class="go">←</div>
-    </a>
-
-    <a class="tool" href="./maternity-allowance/" target="_blank" rel="noopener">
-      <div class="ico">👶</div>
-      <div class="body">
-        <h3>מחשבון דמי לידה ומענק</h3>
-        <p>כמה תקבלי מביטוח לאומי בחופשת הלידה, וכמה מענק לידה מגיע לך.</p>
-      </div>
-      <div class="go">←</div>
-    </a>
-
-    <a class="tool" href="./monthly-baby-cost/" target="_blank" rel="noopener">
-      <div class="ico">👶</div>
-      <div class="body">
-        <h3>כמה עולה חודש עם תינוק</h3>
-        <p>ההוצאה החודשית והשנתית השוטפת מכאן והלאה - כדאי למלא לפני תכנון החופשה.</p>
-      </div>
-      <div class="go">←</div>
-    </a>
-
-    <a class="tool" href="./maternity-leave-plan/" target="_blank" rel="noopener">
-      <div class="ico">🍼</div>
-      <div class="body">
-        <h3>תכנון כלכלי לחופשת הלידה</h3>
-        <p>כמה להפריש כל חודש כדי להגיע ללידה רגועים, עם כסף לציוד ולחודשים בבית.</p>
-      </div>
-      <div class="go">←</div>
-    </a>
-
-    <a class="tool" href="./shopping-list/" target="_blank" rel="noopener">
-      <div class="ico">🛒</div>
-      <div class="body">
-        <h3>רשימת קניות ללידה</h3>
-        <p>מה באמת צריך לתינוק/ת, לפי עדיפות ותקציב, ומה אפשר לבקש כמתנה.</p>
-      </div>
-      <div class="go">←</div>
-    </a>
-
-    <a class="tool" href="./refund-tracker/" target="_blank" rel="noopener">
-      <div class="ico">🧾</div>
-      <div class="body">
-        <h3>מעקב החזרי כספים</h3>
-        <p>כמה שילמת על בדיקות בהיריון, וכמה חזר מקופת החולים ומהביטוחים.</p>
-      </div>
-      <div class="go">←</div>
-    </a>
-
-    <a class="tool" href="./child-savings/" target="_blank" rel="noopener">
-      <div class="ico">🐷</div>
-      <div class="body">
-        <h3>חיסכון לכל ילד</h3>
-        <p>כמה יצטבר לילד/ה עד גיל 18, וכמה זה גדל אם מכפילים את הפקדת המדינה ומוסיפים.</p>
-      </div>
-      <div class="go">←</div>
-    </a>
-  </div>
+  <div class="grid" id="toolGrid"></div>
 
   <div class="cta-card">
     <div class="cta-emoji">🌱</div>
@@ -332,5 +260,19 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 </div>
 <script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href*="service1one1"]').forEach(function(a){a.addEventListener('click',function(){try{fbq('track','Lead',{content_name:'מרכז מחשבוני לידה',content_category:'RichLife כלים'});}catch(e){}});});});</script>
+
+<script src="./tools.js"></script>
+<script>
+(function(){
+  var host=document.getElementById('toolGrid');
+  if(!host||!window.LIDA_TOOLS) return;
+  host.innerHTML = window.LIDA_TOOLS.map(function(t){
+    return '<a class="tool" href="./'+t.slug+'/" target="_blank" rel="noopener">'
+      + '<div class="ico">'+t.ico+'</div>'
+      + '<div class="body"><h3>'+t.name+'</h3><p>'+t.desc+'</p></div>'
+      + '<div class="go">\u2190</div></a>';
+  }).join('');
+})();
+</script>
 </body>
 </html>

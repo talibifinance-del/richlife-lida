@@ -419,16 +419,7 @@ footer .copyright{margin-top:16px;padding-top:14px;border-top:1.5px solid rgba(v
       <h3>🧰 כל המחשבונים שלכם ללידה</h3>
       <p>הרשימה אומרת מה לעשות. המחשבונים נותנים את המספרים. כולם שלכם, בלי הרשמה - נשמרים באותו קישור.</p>
     </div>
-    <div class="tb-grid">
-      <div class="tb-card current"><span class="tb-emoji">✅</span><div class="tb-txt"><div class="tb-name">הצ'ק-ליסט הכלכלי ללידה<span class="tb-here">אתם כאן</span></div><div class="tb-desc">כל המשימות במקום אחד, לפי השלבים: מה לעשות לפני, בזמן ואחרי.</div></div><span class="tb-arrow">←</span></div>
-      <a class="tb-card" href="../couples-map/" target="_blank" rel="noopener"><span class="tb-emoji">💬</span><div class="tb-txt"><div class="tb-name">מפת הכסף הזוגית</div><div class="tb-desc">מה כסף מייצג לכל אחד מכם, איזה ערך מוביל אתכם, ואיך מגשרים על הפערים.</div></div><span class="tb-arrow">←</span></a>
-      <a class="tb-card" href="../maternity-allowance/" target="_blank" rel="noopener"><span class="tb-emoji">👶</span><div class="tb-txt"><div class="tb-name">מחשבון דמי לידה ומענק</div><div class="tb-desc">כמה תקבלי מביטוח לאומי בחופשת הלידה, וכמה מענק לידה מגיע לך.</div></div><span class="tb-arrow">←</span></a>
-      <a class="tb-card" href="../monthly-baby-cost/" target="_blank" rel="noopener"><span class="tb-emoji">👶</span><div class="tb-txt"><div class="tb-name">כמה עולה חודש עם תינוק</div><div class="tb-desc">ההוצאה החודשית והשנתית השוטפת מכאן והלאה - כדאי למלא לפני תכנון החופשה.</div></div><span class="tb-arrow">←</span></a>
-      <a class="tb-card" href="../maternity-leave-plan/" target="_blank" rel="noopener"><span class="tb-emoji">🍼</span><div class="tb-txt"><div class="tb-name">תכנון כלכלי לחופשת הלידה</div><div class="tb-desc">כמה להפריש כל חודש כדי להגיע ללידה רגועים, עם כסף לציוד ולחודשים בבית.</div></div><span class="tb-arrow">←</span></a>
-      <a class="tb-card" href="../shopping-list/" target="_blank" rel="noopener"><span class="tb-emoji">🛒</span><div class="tb-txt"><div class="tb-name">רשימת קניות ותיק לחדר לידה</div><div class="tb-desc">מה באמת צריך לתינוק/ת לפי עדיפות ותקציב, ומה אורזים לבית החולים.</div></div><span class="tb-arrow">←</span></a>
-      <a class="tb-card" href="../refund-tracker/" target="_blank" rel="noopener"><span class="tb-emoji">🧾</span><div class="tb-txt"><div class="tb-name">מעקב החזרי כספים</div><div class="tb-desc">כמה שילמת על בדיקות בהיריון, וכמה חזר מקופת החולים ומהביטוחים.</div></div><span class="tb-arrow">←</span></a>
-      <a class="tb-card" href="../child-savings/" target="_blank" rel="noopener"><span class="tb-emoji">🐷</span><div class="tb-txt"><div class="tb-name">חיסכון לכל ילד</div><div class="tb-desc">כמה יצטבר לילד/ה עד גיל 18, וכמה זה גדל אם מכפילים את הפקדת המדינה ומוסיפים.</div></div><span class="tb-arrow">←</span></a>
-    </div>
+    <div class="tb-grid" id="tbGrid"></div>
   </div>
 
   <div class="cta-card">
@@ -720,6 +711,23 @@ nameInp.addEventListener('input',()=>{S.name=nameInp.value;save();refreshHead();
       .then(t=>{const st=dec(t);if(st)start(st,hp[1]);else start(hs?dec(decodeURIComponent(hs[1])):null,null);})
       .catch(()=>start(hs?dec(decodeURIComponent(hs[1])):null,null));
   } else { start(hs?dec(decodeURIComponent(hs[1])):null,null); }
+})();
+</script>
+
+<script src="../tools.js"></script>
+<script>
+(function(){
+  var host=document.getElementById('tbGrid');
+  if(!host||!window.LIDA_TOOLS) return;
+  var here='checklist';
+  host.innerHTML = window.LIDA_TOOLS.map(function(t){
+    var inner='<span class="tb-emoji">'+t.ico+'</span><div class="tb-txt">'
+      + '<div class="tb-name">'+t.name+(t.slug===here?'<span class="tb-here">\u05d0\u05ea\u05dd \u05db\u05d0\u05df</span>':'')+'</div>'
+      + '<div class="tb-desc">'+t.desc+'</div></div><span class="tb-arrow">\u2190</span>';
+    return t.slug===here
+      ? '<div class="tb-card current">'+inner+'</div>'
+      : '<a class="tb-card" href="../'+t.slug+'/" target="_blank" rel="noopener">'+inner+'</a>';
+  }).join('');
 })();
 </script>
 </body>
