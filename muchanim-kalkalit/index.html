@@ -575,9 +575,14 @@ body { padding-bottom: 92px; }
   <li class="fadeup-ready" style="--delay:.32s"><span class="li-icon">💸</span><span>ואת רובם <span class="neg">מגלים רק בדיעבד</span>, בדיוק כשזה <strong>מאוחר מדי</strong>.</span></li>
  </ul>
 
-<figure class="story-shot ss-small">
- <img src="images/proof-sal-herayon.png" alt="הודעות וואטסאפ על סל היריון ועל תחושת הפסד כלכלי" loading="lazy" decoding="async">
-</figure>
+<div class="story-shots-pair">
+ <figure class="story-shot">
+  <img src="images/proof-sal-herayon.png" alt="הודעות וואטסאפ על סל היריון ועל תחושת הפסד כלכלי" loading="lazy" decoding="async">
+ </figure>
+ <figure class="story-shot">
+  <img src="images/proof-hufshat-lida.png" alt="תגובה של אמא ברשת חברתית על כך שחופשת הלידה משולמת שלושה חודשים בלבד, ושאלה איך מסתדרים אחר כך" loading="lazy" decoding="async">
+ </figure>
+</div>
 </section>
 
 
@@ -922,7 +927,12 @@ body { padding-bottom: 92px; }
 
   <div class="offer-close">מוכנים להיות מוכנים כלכלית<br>ולהיכנס להורות <span class="gold">בשלווה?</span></div>
 
-  <div class="offer-card">
+  <div class="offer-honest">
+ <p>אם לומר בכנות, הקורס הזה הולך לחסוך לכם <strong>עשרות אלפי שקלים</strong>.</p>
+ <p>תכלס, אני יכולה למכור את זה ב-500 שקל בקלות. כי הוא שווה את זה, וכנראה שבהמשך זה גם יגיע לזה.</p>
+ <p class="oh-last">אבל בינתיים אני מזמינה אתכם ליהנות ממחיר השקה.</p>
+</div>
+ <div class="offer-card">
    <div class="price-row"><span class="price-num">197 ₪</span></div>
    <div class="price-split">או <strong>3 תשלומים של 66 ₪</strong></div>
    <div class="price-note">גישה מיידית · לכל החיים</div>
@@ -1334,6 +1344,21 @@ html.a11y-cursor, html.a11y-cursor * { cursor: url('data:image/svg+xml;utf8,<svg
  .story-shot{max-width:100%;margin:15px auto 4px}
  .story-shot.ss-small{max-width:88%}
 }
+
+/* ===== שתי התמונות שסוגרות את הסיפור (27.8.26) ===== */
+.story-shots-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start;max-width:720px;margin:22px auto 4px}
+.story-shots-pair .story-shot{margin:0;max-width:none}
+@media (max-width:768px){
+ .story-shots-pair{grid-template-columns:1fr;gap:12px;max-width:92%;margin:18px auto 4px}
+}
+/* ===== "אם לומר בכנות" מעל כרטיס המחיר (27.8.26) ===== */
+.offer-honest{max-width:560px;margin:0 auto 30px;padding:20px 22px;border-radius:16px;text-align:center;
+ background:rgba(var(--sage-rgb),.10);border:1px solid rgba(var(--sage-rgb),.30)}
+.offer-honest p{margin:0 0 10px;font-size:clamp(15px,1.7vw,17.5px);line-height:1.7;color:var(--on-dark-soft)}
+.offer-honest p:last-child{margin-bottom:0}
+.offer-honest strong{color:var(--on-dark);font-weight:800}
+.offer-honest .oh-last{color:var(--on-dark);font-weight:700}
+@media (max-width:768px){.offer-honest{padding:17px 16px;margin-bottom:24px;max-width:100%}}
 </style>
 <button id="a11y-btn" aria-label="תפריט נגישות" aria-expanded="false" title="נגישות">&#9855;</button>
 <div id="a11y-menu" role="dialog" aria-label="אפשרויות נגישות">
