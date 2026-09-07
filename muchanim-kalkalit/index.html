@@ -535,7 +535,11 @@ body { padding-bottom: 92px; }
  <p>אבל המדינה נותנת רק <strong>15 שבועות בתשלום</strong>,<br>ובתוך תוככם אתם כבר מרגישים שזה פשוט לא מספיק.</p>
 
  <div class="pull-quote">ומחשבה נוספת שרצה בעיקר בראש של האישה:<br>
-  <span class="pq-big">"איך אני אשלח את התינוקת שלי אחרי 3 חודשים למעון?<br>היא צריכה את אמא שלה."</span></div>
+  <span class="pq-big">"איך אני אשלח את התינוקת שלי אחרי 3 חודשים למעון?<br>היא צריכה את אמא שלה."</span>
+ <figure class="story-shot ss-tiktok">
+  <img src="images/proof-tinok-lagan.png" alt="תגובות ברשת על שליחת תינוק בן שלושה חודשים למעון, ונתון על כך שרוב האמהות בישראל סבורות שחופשת הלידה אינה מספקת" loading="lazy" decoding="async">
+ </figure>
+</div>
 
  <p><span class="neg">רוב ההורים מגלים שהם לא באמת מוכנים כלכלית, ומגלים את זה רק תוך כדי.</span><br>ואז מתחיל הלחץ סביב הכסף.<br>אתם רוצים להשקיע בהתפתחות שלו, מסתכלים על חשבון הבנק, ומבינים <span class="neg">שאין מאיפה.</span></p>
 
@@ -570,22 +574,12 @@ body { padding-bottom: 92px; }
   <li class="fadeup-ready" style="--delay:.24s"><span class="li-icon">👶</span><span>ושיש ביטוח שמגיע לבייבי <strong>בחינם</strong>, ורוב ההורים לא מצרפים אליו.</span></li>
   <li class="fadeup-ready" style="--delay:.32s"><span class="li-icon">💸</span><span>ואת רובם <span class="neg">מגלים רק בדיעבד</span>, בדיוק כשזה <strong>מאוחר מדי</strong>.</span></li>
  </ul>
+
+<figure class="story-shot ss-small">
+ <img src="images/proof-sal-herayon.png" alt="הודעות וואטסאפ על סל היריון ועל תחושת הפסד כלכלי" loading="lazy" decoding="async">
+</figure>
 </section>
 
-<!-- ===== קיר ההוכחה: תגובות אמיתיות מהרשת (נוסף 27.8.26) ===== -->
-<section id="proof-wall" class="proof-wall" aria-label="תגובות אמיתיות של אמהות ברשת">
- <div class="pw-inner">
-  <figure class="pw-shot pw-wide fadeup-ready" style="--delay:0s">
-   <img src="images/proof-hufshat-lida.png" alt="תגובה של אמא ברשת חברתית על כך שחופשת הלידה משולמת רק שלושה חודשים, ושאלה איך מסתדרים אחר כך" loading="lazy" decoding="async">
-  </figure>
-  <figure class="pw-shot fadeup-ready" style="--delay:.08s">
-   <img src="images/proof-tinok-lagan.png" alt="תגובות ברשת על שליחת תינוק בן שלושה חודשים למעון, ונתון על כך שרוב האמהות בישראל סבורות שחופשת הלידה אינה מספקת" loading="lazy" decoding="async">
-  </figure>
-  <figure class="pw-shot fadeup-ready" style="--delay:.16s">
-   <img src="images/proof-sal-herayon.png" alt="הודעות וואטסאפ בין אם ובת על סל היריון ועל הרגשת הפסד כלכלי" loading="lazy" decoding="async">
-  </figure>
- </div>
-</section>
 
 <!-- ===== חץ הזמנה ===== -->
 <div class="scroll-invite">
@@ -1330,16 +1324,15 @@ html.a11y-cursor, html.a11y-cursor * { cursor: url('data:image/svg+xml;utf8,<svg
 /* כיבוד העדפת מערכת להפחתת תנועה */
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 
-/* ===== קיר ההוכחה (נוסף 27.8.26) ===== */
-.proof-wall{padding:14px 20px 34px}
-.proof-wall .pw-inner{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
-.proof-wall .pw-shot{margin:0;border-radius:16px;overflow:hidden;background:#fff;border:1px solid rgba(30,43,37,.10);box-shadow:0 10px 30px rgba(30,43,37,.08)}
-.proof-wall .pw-shot.pw-wide{grid-column:1 / -1}
-.proof-wall .pw-shot img{display:block;width:100%;height:auto}
+
+
+/* ===== צילומי מסך בתוך הסיפור (27.8.26) ===== */
+.story-shot{margin:18px auto 4px;max-width:420px;border-radius:14px;overflow:hidden;background:#fff;border:1px solid rgba(30,43,37,.10);box-shadow:0 8px 24px rgba(30,43,37,.09)}
+.story-shot img{display:block;width:100%;height:auto}
+.story-shot.ss-small{max-width:330px;margin-top:22px}
 @media (max-width:768px){
- .proof-wall{padding:10px 16px 26px}
- .proof-wall .pw-inner{grid-template-columns:1fr;gap:13px}
- .proof-wall .pw-shot.pw-wide{grid-column:auto}
+ .story-shot{max-width:100%;margin:15px auto 4px}
+ .story-shot.ss-small{max-width:88%}
 }
 </style>
 <button id="a11y-btn" aria-label="תפריט נגישות" aria-expanded="false" title="נגישות">&#9855;</button>
