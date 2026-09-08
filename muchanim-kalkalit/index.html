@@ -716,18 +716,21 @@ body { padding-bottom: 92px; }
    </div>
   </div>
  <div class="j-bonus">
- <div class="jb-tag">בונוס שנכלל במחיר</div>
- <div class="jb-h3">💬 צוות כלכלי מנצח</div>
- <p class="jb-lead">כאן אני מדברת על איך לתקשר נכון בזוגיות סביב כסף.</p>
+ <div class="jb-badge"><span class="jb-gift-emoji">🎁</span><span>בונוס</span></div>
+ <div class="jb-h3">קורס צוות כלכלי מנצח</div>
+ <p class="jb-lead">איך לתקשר נכון בזוגיות סביב כסף.</p>
  <ul class="jb-list">
-  <li>איך בכלל מעלים את הנושא בלי שהשיחה תתפוצץ בשנייה הראשונה?</li>
-  <li>הוא חושב שאת בזבזנית, את חושבת שהוא קמצן, ומה באמת קורה שם?</li>
-  <li>איך לגשר על הפערים האלה?</li>
-  <li>מה מניע כל החלטה כלכלית שאתם מקבלים?</li>
-  <li>מה חייבים לסגור ביניכם עוד לפני שבונים תקציב?</li>
+  <li>איך בכלל <strong>מעלים את הנושא</strong> בלי שהשיחה תתפוצץ בשנייה הראשונה?</li>
+  <li><strong>למה הוא נעלב</strong> ברגע שמעלים את זה, ומה הוא באמת שומע?</li>
+  <li>הוא חושב <strong>שאת בזבזנית</strong>, את חושבת <strong>שהוא קמצן</strong>, ומה באמת קורה שם?</li>
+  <li>איך <strong>לגשר על הפערים</strong> האלה?</li>
+  <li>מה <strong>מניע כל החלטה כלכלית</strong> שאתם מקבלים?</li>
+  <li><strong>חשבון משותף או נפרד</strong>, ומה נכון דווקא לכם?</li>
+  <li>מה <strong>חייבים לסגור ביניכם</strong> עוד לפני שבונים תקציב?</li>
  </ul>
- <p class="jb-gift">10 שיעורים, קורס שנמכר בנפרד ב-147 ש"ח, ואתם מקבלים אותו כאן <strong>במתנה</strong>.</p>
+ <p class="jb-gift">שווי הקורס <s>147 ש"ח</s> <span class="jb-free">אתם מקבלים אותו כאן במתנה</span></p>
 </div>
+
 
 
 </div>
@@ -1378,6 +1381,26 @@ html.a11y-cursor, html.a11y-cursor * { cursor: url('data:image/svg+xml;utf8,<svg
 
 .j-bonus .jb-lead{font-size:clamp(15.5px,1.75vw,17.5px);color:#4a5a4f;margin-bottom:4px}
 .j-bonus .jb-list li:before{content:"←";font-size:14px}
+
+/* ===== תג הבונוס + שורת המתנה (28.8.26) ===== */
+.j-bonus{position:relative;overflow:hidden}
+.j-bonus .jb-badge{display:inline-flex;align-items:center;gap:7px;position:relative;
+ font-size:13px;font-weight:900;letter-spacing:.16em;color:#6b4d24;
+ background:linear-gradient(135deg,#f7e3bf,#efd3a1);border:1px solid rgba(201,154,95,.55);
+ border-radius:999px;padding:7px 17px;margin-bottom:14px;
+ box-shadow:0 6px 16px rgba(201,154,95,.30)}
+.j-bonus .jb-badge .jb-gift-emoji{font-size:15px;letter-spacing:0}
+.j-bonus .jb-badge:after{content:"";position:absolute;inset:0;border-radius:999px;pointer-events:none;
+ background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.85) 48%,transparent 62%);
+ background-size:280% 100%;animation:jbShine 3.6s ease-in-out infinite}
+@keyframes jbShine{0%{background-position:190% 0}55%,100%{background-position:-90% 0}}
+@media (prefers-reduced-motion:reduce){.j-bonus .jb-badge:after{animation:none}}
+.j-bonus .jb-gift{margin-top:18px;padding-top:15px;border-top:1px solid rgba(201,154,95,.28);
+ display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:9px;
+ font-size:clamp(15px,1.7vw,17px);color:#4a5a4f;font-weight:600}
+.j-bonus .jb-gift s{color:#9a8f80;text-decoration-thickness:2px}
+.j-bonus .jb-free{color:#2f4036;font-weight:900;background:rgba(201,154,95,.16);
+ border-radius:999px;padding:5px 14px}
 </style>
 <button id="a11y-btn" aria-label="תפריט נגישות" aria-expanded="false" title="נגישות">&#9855;</button>
 <div id="a11y-menu" role="dialog" aria-label="אפשרויות נגישות">
