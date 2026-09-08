@@ -153,7 +153,36 @@
 .socials svg{width:20px;height:20px;flex:none}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
   #exportView{display:none;}
-  @media print{ .wrap{display:none!important;} #exportView{display:block;} html,body{background:#fff;} @page{size:A4 portrait;margin:8mm 10mm;} }
+  @media print{ .wrap{display:none!important;} #exportView{display:block;}
+    body.ws-print #exportView{display:none!important;} body.ws-print #worksheet{display:block!important;} html,body{background:#fff;} @page{size:A4 portrait;margin:8mm 10mm;} }
+  /* ── printable blank worksheet (same questions, room to write by hand) ── */
+  #worksheet{display:none;}
+  #worksheet .ws-page{page-break-after:always;}
+  #worksheet .ws-page:last-child{page-break-after:auto;}
+  #worksheet .ws-top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--pine);padding-bottom:7px;margin-bottom:10px;}
+  #worksheet .ws-brand{font-size:16px;font-weight:800;letter-spacing:.04em;color:var(--pine);}
+  #worksheet .ws-brand small{display:block;font-size:8.5px;font-weight:500;color:var(--sage);margin-top:2px;}
+  #worksheet .ws-tag{font-size:10px;font-weight:700;color:#fff;background:var(--pine);border-radius:999px;padding:3px 11px;}
+  #worksheet h2.ws-h{font-size:16px;font-weight:800;color:var(--ink);margin:0 0 3px;}
+  #worksheet .ws-sub{font-size:10.5px;color:var(--ink-faint);margin-bottom:10px;}
+  #worksheet .ws-sec{margin:8px 0;padding-top:6px;border-top:1px dashed var(--line);}
+  #worksheet .ws-sec>.ws-lbl,#worksheet .ws-sec>.ws-desc{break-after:avoid;}
+  #worksheet .ws-q{break-after:avoid;}
+  #worksheet .ws-lbl{font-size:11.5px;font-weight:800;color:var(--pine-deep);display:block;margin-bottom:2px;}
+  #worksheet .ws-desc{font-size:9.5px;color:var(--ink-soft);line-height:1.45;display:block;margin-bottom:5px;}
+  #worksheet .ws-q{font-size:10.5px;font-weight:700;color:var(--ink);margin:6px 0 2px;}
+  #worksheet .wl{border-bottom:1px solid #cfdad2;height:17px;margin-top:5px;break-inside:avoid;}
+  #worksheet .wl.sm{height:16px;}
+  #worksheet .ws-opts{font-size:10px;color:var(--ink);line-height:1.9;}
+  #worksheet .ws-opts span{display:inline-block;margin-left:11px;white-space:nowrap;}
+  #worksheet .ws-ex{font-size:9px;color:var(--ink-soft);background:var(--accent-tint);border-radius:7px;padding:6px 8px;margin:5px 0;line-height:1.5;}
+  #worksheet .ws-b{display:flex;align-items:flex-end;gap:7px;margin-top:6px;break-inside:avoid;}
+  #worksheet .ws-b .n{font-size:9.5px;font-weight:800;color:var(--pine);flex:none;padding-bottom:2px;}
+  #worksheet .ws-b .t{font-size:10.5px;flex:none;padding-bottom:2px;}
+  #worksheet .ws-b .l{flex:1;border-bottom:1px solid #cfdad2;height:17px;}
+  #worksheet .ws-note{font-size:9.5px;color:var(--ink-soft);background:var(--sage-tint);border-radius:8px;padding:7px 9px;margin:8px 0;line-height:1.55;}
+  #worksheet .ws-foot{margin-top:10px;padding-top:6px;border-top:1px solid var(--line);font-size:8.5px;color:var(--ink-faint);text-align:center;}
+  @media print{ #worksheet .ws-page{padding:0;} }
   .ev-top{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--pine);padding-bottom:7px;}
   .ev-brand{font-size:16px;font-weight:800;letter-spacing:.04em;color:var(--pine);}
   .ev-brand small{display:block;font-size:8.5px;font-weight:500;color:var(--sage);margin-top:2px;}
@@ -353,6 +382,7 @@
 </style>
 </head>
 
+<div id="worksheet" dir="rtl" aria-hidden="true"></div>
 <div class="wrap">
   <header class="top">
     <div class="brandline">RICHLIFE · מוכנים כלכלית ללידה</div>
@@ -425,6 +455,7 @@
   <div class="actions">
     <button class="btn" id="saveBtn" type="button">שמירה וקבלת קישור</button>
     <button class="btn ghost" id="printBtn" type="button">ייצוא ל-PDF</button>
+    <button class="btn ghost" id="wsBtn" type="button">דף עבודה להדפסה</button>
     <span class="savemsg" id="saveMsg"></span>
   </div>
 
@@ -769,8 +800,118 @@
     h+='<div class="ev-foot">© 2026 כל הזכויות שמורות ל-RichLife ולטלי בנימינוב שרעבי. אין לשכפל, להפיץ או לעשות שימוש בתוכן זה ללא אישור מראש ובכתב.</div>';
     q('#exportView').innerHTML=h;
   }
-  q('#printBtn').addEventListener('click',function(){ buildExportView(); window.print(); });
-  window.addEventListener('beforeprint', buildExportView);
+
+  /* ── blank worksheet for printing ──
+     Built from the SAME constants the on-screen tool uses (BELIEFS, REPRESENTS, VALUES,
+     STYLES, FEELS, KINDS), so adding a question on screen adds it to the printout too. */
+  function wsLines(n,cls){ var o=''; for(var i=0;i<(n||1);i++) o+='<div class="wl'+(cls?' '+cls:'')+'"></div>'; return o; }
+  function wsOpts(list){ return '<div class="ws-opts">'+list.map(function(o){ return '<span>☐ '+esc(o)+'</span>'; }).join('')+'</div>'; }
+  function wsQ(t,n,cls){ return '<div class="ws-q">'+t+'</div>'+wsLines(n||1,cls); }
+  function wsHead(tag){
+    return '<div class="ws-top"><div class="ws-brand">RICHLIFE<small>מוכנים כלכלית ללידה · טלי בנימינוב שרעבי</small></div>'+
+           '<div class="ws-tag">'+esc(tag)+'</div></div>';
+  }
+  function wsPersonPage(letter){
+    var h='<div class="ws-page">'+wsHead('מפת הכסף הזוגית')+
+      '<h2 class="ws-h">העבודה האישית · בן/בת זוג '+letter+'</h2>'+
+      '<div class="ws-sub">השם שלי: ____________________________ &nbsp;&nbsp; תאריך: ____________</div>'+
+      '<div class="ws-note">ממלאים כל אחד לעצמו, בכנות, בלי לצנזר ובלי להראות לשני. רק בסוף מסתכלים יחד. אין כאן נכון ולא נכון.</div>';
+
+    h+='<div class="ws-sec"><span class="ws-lbl">רגע של כנות: איפה גדלתי</span>'+
+       '<span class="ws-desc">איך נראתה ההתנהלות הכלכלית בבית שגדלתי בו? איך דיברו על כסף, מי קיבל את ההחלטות, והאם היו לחצים, חובות או תחושת חוסר?</span>'+
+       wsLines(2)+
+       wsQ('אילו משפטים על כסף אני זוכר/ת מהילדות?',2)+
+       wsQ('איזו התנהגות זה יצר אצלי, ומה אני סוחב/ת מזה לזוגיות?',2)+
+       wsQ('ומה אני שואף/ת שיקרה בינינו?',2)+'</div>';
+
+    h+='<div class="ws-sec"><span class="ws-lbl">רגע לפני שמתחילים</span>'+
+       '<span class="ws-desc">תיזכרו בשני רגעים: אחד שבו הרגשתם ממש טוב עם כסף, ואחד ממש לא נעים. מה עמד מאחורי כל אחד?</span>'+
+       wsLines(2)+'</div>';
+
+    h+='<div class="ws-sec"><span class="ws-lbl">ומתוך זה, מה כסף מייצג בשבילי</span>'+
+       '<span class="ws-desc">אפשר לסמן כמה, כסף יכול לסמל יותר מדבר אחד.</span>'+wsOpts(REPRESENTS)+'</div>';
+
+    h+='<div class="ws-sec"><span class="ws-lbl">מהתחושה על הכסף, אל הערך העמוק</span>'+
+       '<span class="ws-desc">קחו את מה שכסף מייצג לכם, ותעמיקו: למה זה חשוב לי? כמה פעמים, עד שמגיעים לערך שמתחת.</span>'+
+       '<div class="ws-ex"><b>לאן חותרים (דוגמה):</b> כסף מייצג לי <b>ביטחון</b> ← ולמה ביטחון חשוב לי? ← כדי שהמשפחה שלי תהיה מוגנת ← ולמה? ← כי גדלתי בבית לא יציב ← <b>הערך: משפחה ויציבות</b></div>'+
+       wsQ('מה שכסף מייצג לי חשוב לי, כי...',1)+
+       wsQ('ולמה זה חשוב לי?',1)+
+       wsQ('ולמה זה חשוב לי? (זה כבר השורש)',1)+'</div>';
+
+    h+='<div class="ws-sec"><span class="ws-lbl">הערכים שלי, מדורגים</span>'+
+       '<span class="ws-desc">בחרו את הערכים שהגעתם אליהם, סדרו מהחשוב ביותר, ולכל אחד כתבו מה הוא אומר לכם ואיך הוא בא לידי ביטוי ביום-יום.</span>'+
+       wsOpts(VALUES);
+    for(var i=1;i<=4;i++) h+='<div class="ws-b"><span class="n">'+i+'.</span><span class="l"></span></div>';
+    h+='</div>';
+
+    h+='</div>';
+
+    // second page for this person: the 16 completions + the limiting belief + style + how I see it
+    h+='<div class="ws-page">'+wsHead('מפת הכסף הזוגית')+
+       '<h2 class="ws-h">האמונות שלי על כסף · בן/בת זוג '+letter+'</h2>'+
+       '<div class="ws-sub">'+BELIEFS.length+' משפטים. השלימו מהר, מה שעולה ראשון, בלי לחשוב מה נכון. משפט שלא מתחבר, פשוט דלגו עליו.</div>';
+    BELIEFS.forEach(function(b,i){
+      h+='<div class="ws-b"><span class="n">'+(i+1)+'.</span><span class="t">'+esc(b[1].replace(' ___','').replace('___',''))+'</span><span class="l"></span></div>';
+    });
+    h+='<div class="ws-sec"><span class="ws-lbl">האמונה שהכי עוצרת אותי</span>'+
+       wsQ('מבין מה שכתבתם, איזו אמונה מרגישה מגבילה, כזו שעוצרת אתכם?',1)+
+       '<div class="ws-q">האמונה הזאת היא על העולם, או עליי?</div>'+wsOpts(KINDS)+
+       '<div class="ws-ex"><b>שימו לב:</b> אמונה <b>על העולם</b> ("עשירים לא ישרים") מופרכת דרך אנשים אחרים. אמונה <b>על עצמי</b> ("לא מגיע לי", "אני לא יודע/ת לשמור") לא מופרכת דרך אחרים, כי תמיד אפשר להגיד "זה הם". אותה מפריכים רק מהחיים שלכם עצמכם.</div>'+
+       wsQ('אם על העולם: מכיר/ה מישהו שסותר את האמונה הזאת?',2)+
+       wsQ('אם על עצמי: מה בחיים שלכם כבר סותר אותה? (משהו שהצלחתם בו למרות שחשבתם שהוא לא בשבילכם, פעם שהתמדתם, הרגל ששיניתם)',2)+
+       wsQ('עכשיו נסחו אמונה מעצימה במקום (בגוף ראשון, חיובי, בלי "לא"):',2)+'</div>';
+    h+='<div class="ws-sec"><span class="ws-lbl">איך אני מתנהל/ת מול כסף</span>'+wsOpts(STYLES)+'</div>';
+    h+='<div class="ws-foot">© RichLife · טלי בנימינוב שרעבי</div></div>';
+
+    h+='<div class="ws-page">'+wsHead('מפת הכסף הזוגית')+
+       '<h2 class="ws-h">ככה אני רואה את זה · בן/בת זוג '+letter+'</h2>'+
+       '<div class="ws-sub">עדיין כל אחד לעצמו. זה החלק שהכי קל להגיד בו דברים גדולים, אז קחו את הזמן.</div>'+
+       '<div class="ws-note">המטרה היא לשים מילים, לא רק רגשות. אף אחד לא צודק כאן, ואף אחד לא מואשם.</div>'+
+       '<div class="ws-sec"><span class="ws-lbl">מה מפריע לי בהתנהלות הכלכלית של בן/בת הזוג שלי</span>'+wsLines(3)+'</div>'+
+       '<div class="ws-sec"><span class="ws-lbl">ולמה זה מפריע לי?</span>'+
+       '<span class="ws-desc">כי זה מגביל אותי · כי זה לא אחראי בעיניי · כי זה מחניק אותי</span>'+wsLines(3)+'</div>'+
+       '<div class="ws-sec"><span class="ws-lbl">ואיך זה גורם לי להרגיש?</span>'+
+       '<span class="ws-desc">אפשר לסמן כמה.</span>'+wsOpts(FEELS)+'</div>'+
+       '<div class="ws-sec"><span class="ws-lbl">ומה לדעתי מסתתר מאחורי ההתנהגות שלו/שלה?</span>'+
+       '<span class="ws-desc">איזו חוויה מהעבר יכולה להסביר את זה? מה זה מאפשר לו/לה?</span>'+wsLines(3)+'</div>'+
+       '<div class="ws-foot">© RichLife · טלי בנימינוב שרעבי</div></div>';
+    return h;
+  }
+  function wsBridgePage(){
+    var h='<div class="ws-page">'+wsHead('הגשר')+
+      '<h2 class="ws-h">עכשיו ביחד · הגשר שלנו</h2>'+
+      '<div class="ws-sub">אחרי שכל אחד מילא לעצמו: משתפים, מקשיבים בלי להגיב, ואז בונים את ההסכמים.</div>'+
+      '<div class="ws-note">קודם כל אחד מספר: "אני מתנהל/ת מול כסף בעיקר כ___, והערך שמוביל אותי הוא ___", והשני רק מקשיב. ואז משלימים יחד: "החשוב לי זה ___, החשוב לך זה ___, ושניהם נכונים".</div>'+
+      wsQ('הערך המוביל של בן/בת זוג א׳',1)+
+      wsQ('הערך המוביל של בן/בת זוג ב׳',1)+
+      '<div class="ws-sec"><span class="ws-lbl">הגשר: איך כל ערך מקבל מקום בפועל</span>'+
+      wsQ('כדי לממש את הערך של א׳ — מה נעשה, וכמה בחודש?',2)+
+      wsQ('כדי לממש את הערך של ב׳ — מה נעשה, וכמה בחודש?',2)+'</div>'+
+      '<div class="ws-sec"><span class="ws-lbl">מטרת העל הזוגית שלנו לשנה הקרובה</span>'+
+      wsQ('הדבר הכי חשוב שנשיג יחד, וכמה הוא עולה',2)+
+      wsQ('עד מתי נגיע אליה, וכמה זה יוצא בחודש',2)+'</div>'+
+      '<div class="ws-sec"><span class="ws-lbl">הכללים שלנו</span>'+
+      wsQ('מרחב אישי: סכום חופשי לכל אחד, בלי לתת דין וחשבון (לא׳ ___ ₪ · לב׳ ___ ₪)',1)+
+      wsQ('מעל איזה סכום מתייעצים לפני קנייה?',1)+
+      wsQ('הקווים האדומים שלנו: מה בכלל לא עושים',2)+'</div>'+
+      '<div class="ws-sec"><span class="ws-lbl">פגישת הכסף הראשונה שלנו</span>'+
+      '<div class="ws-desc">תאריך ושעה, ביומן, עכשיו.</div>'+wsLines(1)+'</div>'+
+      '<div class="ws-note">רוצים לבנות על זה תוכנית כלכלית אמיתית, יחד? ליווי אישי עם טלי: calendar.app.google/6YeWfsc6nfo25yhK7</div>'+
+      '<div class="ws-foot">© RichLife · טלי בנימינוב שרעבי</div></div>';
+    return h;
+  }
+  function buildWorksheet(){
+    var el=document.getElementById('worksheet');
+    if(el) el.innerHTML = wsPersonPage('א׳') + wsPersonPage('ב׳') + wsBridgePage();
+  }
+  var printMode='export';
+  q('#wsBtn').addEventListener('click',function(){
+    printMode='worksheet'; document.body.classList.add('ws-print'); buildWorksheet(); window.print();
+  });
+  window.addEventListener('afterprint',function(){ printMode='export'; document.body.classList.remove('ws-print'); });
+
+  q('#printBtn').addEventListener('click',function(){ printMode='export'; document.body.classList.remove('ws-print'); buildExportView(); window.print(); });
+  window.addEventListener('beforeprint',function(){ if(printMode==='worksheet') buildWorksheet(); else buildExportView(); });
   renderMap();
 })();
 </script>
