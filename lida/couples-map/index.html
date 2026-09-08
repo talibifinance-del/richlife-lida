@@ -451,13 +451,25 @@
   var REPRESENTS=["ביטחון","חופש","הנאה","אהבה ונתינה","ערך והצלחה","הישרדות"];
   var VALUES=["ביטחון","חופש","הנאה","משפחה","כבוד","עצמאות","נדיבות","יציבות","שקט נפשי","הרפתקה"];
   var STYLES=["חסכן/ית","בזבזן/ית","נמנע/ת","מנהל/ת"];
+  // a belief about the WORLD is disproved by other people; one about MYSELF only by my own evidence
+  var KINDS=["על העולם","על עצמי"];
   var FEELS=["מרוחק/ת","חסום/ה","חנוק/ה","חסר/ת שליטה","לא מוערך/ת","מוצף/ת","בודד/ה","מובן/ת","נינוח/ה","בטוח/ה","מוערך/ת","רגוע/ה"];
   var BELIEFS=[
     ['b1','"כסף זה ___"'],['b2','"אנשים עם הרבה כסף הם ___"'],['b3','"בבית שגדלתי בו, כסף היה ___"'],
     ['b4','"כשאני חושב/ת על כסף, אני מרגיש/ה ___"'],['b5','"הדבר שהכי מלחיץ אותי סביב כסף הוא ___"'],
-    ['b6','"כשאני מוציא/ה כסף על עצמי, אני מרגיש/ה ___"']
+    ['b6','"כשאני מוציא/ה כסף על עצמי, אני מרגיש/ה ___"'],
+    ['b7','"הסיכוי שלי להיות עשיר/ה נמוך, מפני ש ___"'],
+    ['b8','"אפשר להתעשר, אבל עבורי זה פחות אפשרי, כי ___"'],
+    ['b9','"הסיבה שלא הולך לי טוב עם כסף היא ש ___"'],
+    ['b10','"הייתי מעדיף/ה להיות עשיר/ה, אבל כסף עלול לגרום ל ___"'],
+    ['b11','"אני מפחד/ת שיותר מדי כסף יביא ל ___"'],
+    ['b12','"להגביל את עצמי להוציא סכום מסוים גורם לי ___"'],
+    ['b13','"כדי להרוויח יותר כסף אני צריך/ה ___"'],
+    ['b14','"ההורים שלי היו לחוצים מכסף, מפני ש ___"'],
+    ['b15','"קשה להרוויח כסף בתחום שלי, מפני ש ___"'],
+    ['b16','"לא מגיע לי כסף גדול, כי אני ___"']
   ];
-  var BLANK={warmup:'',represents:[],beliefs:{},limiting:'',disprove:'',reframe:'',ladderQ:'',ladderW1:'',ladderW2:'',values:[],style:'',home:'',homeLines:'',homeDid:'',aspire:'',bugs:'',bugsWhy:'',feels:[],behind:''};
+  var BLANK={warmup:'',represents:[],beliefs:{},limiting:'',kind:'',disprove:'',reframe:'',ladderQ:'',ladderW1:'',ladderW2:'',values:[],style:'',home:'',homeLines:'',homeDid:'',aspire:'',bugs:'',bugsWhy:'',feels:[],behind:''};
   function blank(){ return JSON.parse(JSON.stringify(BLANK)); }
   var state={a:blank(), b:blank(), ag:{}};
   function q(s,el){return (el||document).querySelector(s);}
@@ -506,12 +518,18 @@
       chipsHTML('valpick',VALUES,null)+
       '<div class="addval"><input type="text" data-f="valcustom" placeholder="ערך משלי..."><button type="button" data-f="valadd">הוספה</button></div>'+
       '<div class="vlist" data-vlist></div></div>'+
-    '<div class="sec"><span class="lbl">האמונות שלי על כסף</span><span class="desc">השלימו מהר, מה שעולה ראשון. ככה יוצאות האמונות האמיתיות.</span>'+
+    '<div class="sec"><span class="lbl">האמונות שלי על כסף</span><span class="desc">16 משפטים. השלימו מהר, מה שעולה ראשון, בלי לחשוב מה נכון. ככה יוצאות האמונות האמיתיות, גם כאלה שלא ידעתם שיש לכם. משפט שלא מתחבר לכם, פשוט דלגו עליו.</span>'+
       '<div class="beliefs">'+beliefRows+'</div>'+
       '<div class="pick"><label>מבין מה שכתבתם, איזו אמונה מרגישה מגבילה, כזו שעוצרת אתכם?</label>'+
       '<input type="text" data-f="limiting" value="'+esc(s.limiting||'')+'" placeholder="האמונה שהכי עוצרת אותי">'+
-      '<label>מכיר/ה מישהו שסותר את האמונה הזאת?</label>'+
-      '<input type="text" data-f="disprove" value="'+esc(s.disprove||'')+'" placeholder="למשל: עשיר שהוא טוב ותורם, מישהו שנהנה מהעבודה ומרוויח בקלות">'+
+      '<label>האמונה הזאת היא על העולם, או עליי?</label>'+
+      chipsHTML('kind',KINDS,s.kind)+
+      '<label>'+(s.kind==='על עצמי'
+        ? 'אז אנשים אחרים לא יפריכו אותה. מה בחיים שלכם כבר סותר אותה?'
+        : 'מכיר/ה מישהו שסותר את האמונה הזאת?')+'</label>'+
+      '<input type="text" data-f="disprove" value="'+esc(s.disprove||'')+'" placeholder="'+(s.kind==='על עצמי'
+        ? 'משהו שהצלחתם בו למרות שחשבתם שהוא לא בשבילכם, פעם שהתמדתם, הרגל ששיניתם'
+        : 'למשל: עשיר שהוא טוב ותורם, מישהו שנהנה מהעבודה ומרוויח בקלות')+'">'+
       '<label>עכשיו נסחו אמונה מעצימה במקום (בגוף ראשון, חיובי, בלי "לא"):</label>'+
       '<input type="text" data-f="reframe" value="'+esc(s.reframe||'')+'" placeholder="למשל: כסף נמשך אליי בקלות · אני יודע/ת לנהל כסף"></div></div>'+
     '<div class="sec"><span class="lbl">איך אני מתנהל/ת מול כסף</span>'+chipsHTML('style',STYLES,s.style)+'</div>'+
@@ -642,6 +660,7 @@
           s[f]= on?'':txt;
         }
         renderMap(); save(true);
+        if(f==='kind'){ var c=q('.card[data-p="'+p+'"]'); if(c){ c.innerHTML=cardHTML(p); bindCard(p); renderVlist(p); } }
       }
       chip.addEventListener('click',toggle);
       chip.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} });
@@ -674,7 +693,7 @@
   function syncLive(){ if(!docId) return; clearTimeout(pushT); pushT=setTimeout(function(){ fetch(SHARE_API+'/?id='+encodeURIComponent(docId),{method:'POST',body:encode()}).then(function(r){if(r.status===404)docId=null;}).catch(function(){}); },1200); }
   function save(silent){ persist(); if(docId){ syncLive(); if(!silent) q('#saveMsg').textContent='נשמר לקישור.'; return; } var h=encode(); if(h){ try{history.replaceState(null,'','#m='+h);}catch(e){} } if(!silent) q('#saveMsg').textContent='נשמר.'; }
   // apply a decoded map and fully refresh the UI (used by the short-link #p= loader)
-  function applyDecoded(st){ if(!st) return; state={a:st.a||state.a,b:st.b||state.b,ag:st.ag||{}}; ['a','b'].forEach(function(p){ ['warmup','represents','beliefs','limiting','disprove','reframe','ladderQ','ladderW1','ladderW2','values','style','name','home','homeLines','homeDid','aspire','bugs','bugsWhy','feels','behind'].forEach(function(k){ if(state[p][k]===undefined) state[p][k]= ((k==='values'||k==='represents'||k==='feels')?[]:(k==='beliefs'?{}:'')); }); if(!Array.isArray(state[p].represents)) state[p].represents = state[p].represents? [state[p].represents] : []; var c=q('.card[data-p="'+p+'"]'); if(c) c.innerHTML=cardHTML(p); bindCard(p); renderVlist(p); }); qa('#bridge [data-a]').forEach(function(inp){ var k=inp.getAttribute('data-a'); if(state.ag[k]!==undefined){ if(inp.type==='checkbox') inp.checked=!!state.ag[k]; else inp.value=state.ag[k]; } }); renderMap(); }
+  function applyDecoded(st){ if(!st) return; state={a:st.a||state.a,b:st.b||state.b,ag:st.ag||{}}; ['a','b'].forEach(function(p){ ['warmup','represents','beliefs','limiting','kind','disprove','reframe','ladderQ','ladderW1','ladderW2','values','style','name','home','homeLines','homeDid','aspire','bugs','bugsWhy','feels','behind'].forEach(function(k){ if(state[p][k]===undefined) state[p][k]= ((k==='values'||k==='represents'||k==='feels')?[]:(k==='beliefs'?{}:'')); }); if(!Array.isArray(state[p].represents)) state[p].represents = state[p].represents? [state[p].represents] : []; var c=q('.card[data-p="'+p+'"]'); if(c) c.innerHTML=cardHTML(p); bindCard(p); renderVlist(p); }); qa('#bridge [data-a]').forEach(function(inp){ var k=inp.getAttribute('data-a'); if(state.ag[k]!==undefined){ if(inp.type==='checkbox') inp.checked=!!state.ag[k]; else inp.value=state.ag[k]; } }); renderMap(); }
 
   // restore from this device BEFORE the cards are built; a #m= / #p= link in the URL still wins over it.
   (function(){
@@ -683,7 +702,7 @@
       var st=JSON.parse(raw); if(!st) return;
       state={a:st.a||state.a,b:st.b||state.b,ag:st.ag||{}};
       ['a','b'].forEach(function(pp){
-        ['warmup','represents','beliefs','limiting','disprove','reframe','ladderQ','ladderW1','ladderW2','values','style','name','home','homeLines','homeDid','aspire','bugs','bugsWhy','feels','behind'].forEach(function(k){
+        ['warmup','represents','beliefs','limiting','kind','disprove','reframe','ladderQ','ladderW1','ladderW2','values','style','name','home','homeLines','homeDid','aspire','bugs','bugsWhy','feels','behind'].forEach(function(k){
           if(state[pp][k]===undefined) state[pp][k]= ((k==='values'||k==='represents'||k==='feels')?[]:(k==='beliefs'?{}:''));
         });
         if(!Array.isArray(state[pp].represents)) state[pp].represents = state[pp].represents? [state[pp].represents] : [];
@@ -694,7 +713,7 @@
   // build cards
   ['a','b'].forEach(function(p){ var el=document.createElement('div'); el.className='card '+p; el.setAttribute('data-p',p); el.innerHTML=cardHTML(p); q('#cards').appendChild(el); });
   // load hash
-  (function(){ var m=location.hash.match(/m=([^&]+)/); if(m){ var st=decode(m[1]); if(st){ state={a:st.a||state.a,b:st.b||state.b,ag:st.ag||{}}; ['a','b'].forEach(function(p){ ['warmup','represents','beliefs','limiting','disprove','reframe','ladderQ','ladderW1','ladderW2','values','style','name','home','homeLines','homeDid','aspire','bugs','bugsWhy','feels','behind'].forEach(function(k){ if(state[p][k]===undefined) state[p][k]= ((k==='values'||k==='represents'||k==='feels')?[]:(k==='beliefs'?{}:'')); }); if(!Array.isArray(state[p].represents)) state[p].represents = state[p].represents? [state[p].represents] : []; q('.card[data-p="'+p+'"]').innerHTML=cardHTML(p); }); } } })();
+  (function(){ var m=location.hash.match(/m=([^&]+)/); if(m){ var st=decode(m[1]); if(st){ state={a:st.a||state.a,b:st.b||state.b,ag:st.ag||{}}; ['a','b'].forEach(function(p){ ['warmup','represents','beliefs','limiting','kind','disprove','reframe','ladderQ','ladderW1','ladderW2','values','style','name','home','homeLines','homeDid','aspire','bugs','bugsWhy','feels','behind'].forEach(function(k){ if(state[p][k]===undefined) state[p][k]= ((k==='values'||k==='represents'||k==='feels')?[]:(k==='beliefs'?{}:'')); }); if(!Array.isArray(state[p].represents)) state[p].represents = state[p].represents? [state[p].represents] : []; q('.card[data-p="'+p+'"]').innerHTML=cardHTML(p); }); } } })();
   ['a','b'].forEach(function(p){ bindCard(p); renderVlist(p); });
   // short-link (#p=) loader - fetches the stored map and applies it
   (function(){ var hp=(location.hash||'').match(/p=([0-9A-Za-z]{4,16})/); if(!hp) return; docId=hp[1]; fetch(SHARE_API+'/?id='+encodeURIComponent(hp[1])).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){ applyDecoded(decode(t)); }).catch(function(){}); })();
