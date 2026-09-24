@@ -537,7 +537,7 @@ const BAG_SEED={
     ['גיליון מעקב הריון + בדיקות','hi','all','כולל אולטרסאונד אחרון, סוג דם וסקר גנטי.'],
     ['תוצאת משטח GBS','hi','all','משפיע על טיפול אנטיביוטי בלידה - חשוב שיהיה בהישג יד.'],
     ['מכתבי רופא / רגישות לתרופות','mid','all','אם יש מעקב מיוחד, מחלת רקע או אלרגיה.'],
-    ['תוכנית לידה (אם כתבתם)','lo','all','עמוד אחד קצר וברור, לא מסמך ארוך.'],
+    ['תוכנית לידה מודפסת','mid','all','עמוד אחד קצר: מה חשוב לכם בלידה ומה פחות. להדפיס שני עותקים, אחד לצוות ואחד לכם.'],
     ['פרטי ביטוח פרטי','mid','all','אם יש כיסוי ללידה או לאשפוז - שיהיה מספר הפוליסה.']
   ],
   'ליולדת - חדר לידה':[
@@ -549,7 +549,15 @@ const BAG_SEED={
     ['שפתון לחות','mid','all','נשימות ארוכות מייבשות את השפתיים.'],
     ['חטיפי אנרגיה / תמרים','mid','all','ללידה ארוכה - לוודא מול הצוות מה מותר לאכול.'],
     ['מניפה קטנה / מגבונים מרעננים','lo','all','נעים בין צירים.'],
-    ['כדור פיזיו','lo','all','חלק מבתי החולים מספקים - לבדוק מראש ולא לגרור סתם.']
+    ['כדור פיזיו','lo','all','חלק מבתי החולים מספקים - לבדוק מראש ולא לגרור סתם.'],
+    ['שמן שקדים / שמן לעיסוי','hi','all','לעיסוי הפרינאום ולגב בזמן צירים. מרכך את העור ועוזר להקטין קרעים.'],
+    ['רמקול בלוטות׳ קטן','mid','all','מוזיקה בחדר עצמו, לא רק באוזניות. לטעון בבית.'],
+    ['אורות אווירה (שרשרת LED / נר LED)','mid','all','במקום התאורה הלבנה והחזקה. אש אמיתית אסורה בבית חולים.'],
+    ['דיפיוזר + שמן ארומטי (הדרים)','mid','all','ריח של בית במקום ריח של בית חולים. לוודא מול הצוות ומול מי שבחדר.'],
+    ['כרית חימום / בקבוק מים חמים','mid','all','לכאבי הגב בצירים. יש גם כריות שמתחממות במיקרוגל.'],
+    ['מגבת קטנה להרטבה במים קרים','lo','all','למצח ולעורף בין צירים. פשוט ועובד.'],
+    ['מעסה גב קטן','lo','all','למלווה, ללחיצות על הגב התחתון בזמן ציר.'],
+    ['משפטי עידוד / תמונה מהבית','lo','all','מה שמרגיע אותך מול העיניים. להכין מראש, לא ברגע האמת.']
   ],
   'ליולדת - האשפוז':[
     ['פיג׳מות נוחות (2) עם פתח להנקה','hi','all','שוהים 2-3 ימים; כפתורים מלפנים מקלים.'],
@@ -788,9 +796,32 @@ function dec(str){try{
   if(o.m==='shop'||o.m==='bag')MODE=o.m;
   return {total:o.t??'',catB:o.cb||{},items:unpackItems(o.it),bag:Array.isArray(o.bg)?unpackItems(o.bg):null};
 }catch(e){return null;}}
+/* A saved list is a snapshot: without this, an item added to the built-in list after someone
+   saved would never reach them. Rebuild from the current seed, carry over what they marked
+   (bought / gift / paid), keep rows they typed in themselves, and never duplicate a row. */
+function mergeSeed(savedItems,catOrder,seedData){
+  const norm=t=>String(t||'').replace(/\s+/g,' ').trim();
+  const was={};
+  (savedItems||[]).forEach(it=>{const k=norm(it.name); if(k&&!was[k])was[k]=it;});
+  const out=[],used={};
+  catOrder.forEach(([e,cat])=>{
+    (seedData[cat]||[]).forEach(([name,pri,feed,note])=>{
+      const k=norm(name),o=was[k]; used[k]=true;
+      out.push({id:++uid,cat,name,pri,feed,note,
+        bought:o?!!o.bought:false, gift:o?!!o.gift:false, paid:o?(o.paid??''):''});
+    });
+  });
+  (savedItems||[]).forEach(it=>{
+    const k=norm(it.name);
+    if(k&&used[k])return;          // already placed from the seed
+    if(k)used[k]=true;             // and never twice
+    out.push({...it,id:++uid});
+  });
+  return out;
+}
 function applyLoaded(l){
-  S={total:l.total,catB:l.catB,items:l.items};
-  B={items:(l.bag&&l.bag.length)?l.bag:seedBag().items};
+  S={total:l.total,catB:l.catB,items:mergeSeed(l.items,CAT_ORDER,SEED_DATA)};
+  B={items:(l.bag&&l.bag.length)?mergeSeed(l.bag,BAG_CAT_ORDER,BAG_SEED):seedBag().items};
 }
 const SHARE_API='https://richlife-share.tali-bi-finance.workers.dev';
 function makeLink(){return location.origin+location.pathname+location.search+'#s='+encodeURIComponent(enc());}
