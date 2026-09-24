@@ -537,8 +537,28 @@ function reconcile(saved){
   const fresh=seedState();
   fresh.name=saved.name||'';
   const norm=t=>String(t||'').replace(/\s+/g,' ').trim();
+  // Tasks that were REWRITTEN or removed. Without this a reworded task looks like a task the
+  // couple typed in themselves, and the old wording is carried over forever next to the new one.
+  // `now` = the tasks that replaced it, so a tick on the old one carries to the new ones.
+  const RETIRED_TASKS=[
+    {old:'לעדכן טופס 101 בעבודה מיד אחרי הלידה, ככה מקבלים נקודות זיכוי במס = יותר כסף נטו כל חודש',
+     now:['להגיד בעבודה שילדתי, ולמלא טופס 101 חדש (טופס קצר שרושמים בו כמה ילדים יש לי) עם התינוק. זה מה שנותן לי הנחה במס. בלי זה מורידים לי מס כאילו אין תינוק']},
+    {old:'למלא טופס 101 חדש בעבודה מיד כשחוזרים (זה הטופס שבו מצהירים למעסיק כמה ילדים יש), ולסמן בו את התינוק. בלי זה ממשיכים לשלם מס כאילו אין ילד',
+     now:['להגיד בעבודה שילדתי, ולמלא טופס 101 חדש (טופס קצר שרושמים בו כמה ילדים יש לי) עם התינוק. זה מה שנותן לי הנחה במס. בלי זה מורידים לי מס כאילו אין תינוק']},
+    {old:'להגיד למעסיק במפורש שילדתי, ולבקש שיעדכנו את נקודות הזיכוי רטרו מתחילת השנה. ככה כל ההפרש חוזר כבר בתלוש הקרוב, ולא נגרר להחזר מס בשנה הבאה',
+     now:['לבקש שההנחה תחושב מתחילת השנה ולא רק מהחודש הזה. ככה כל המס שירד לי יותר מדי חוזר אליי כבר בתלוש הקרוב, במקום לחכות שנה שלמה להחזר מס']},
+    {old:'שגם אבא ימלא טופס 101 חדש בעבודה שלו ויבקש את אותו עדכון רטרו על אותה שנה. גם אבא מקבל נקודות זיכוי על התינוק, וגם אצלו זה יותר נטו כל חודש',
+     now:['שגם אבא יעשה את אותם שני הדברים בעבודה שלו. גם לו מגיעה הנחה במס בגלל התינוק, והרבה לא יודעים את זה']}
+  ];
+  const retired={};
+  RETIRED_TASKS.forEach(r=>{ retired[norm(r.old)]=(r.now||[]).map(norm); });
   const seen={};
-  saved.rooms.forEach(r=>r.items.forEach(it=>{ if(it.d) seen[norm(it.n)]=true; }));
+  saved.rooms.forEach(r=>r.items.forEach(it=>{
+    if(!it.d) return;
+    const k=norm(it.n);
+    seen[k]=true;
+    (retired[k]||[]).forEach(t=>{ seen[t]=true; });
+  }));
   // keep ticks by task text
   fresh.rooms.forEach(r=>r.items.forEach(it=>{ if(seen[norm(it.n)]) it.d=true; }));
   // keep tasks the couple typed in themselves (not in the built-in list).
@@ -551,13 +571,17 @@ function reconcile(saved){
   }));
   // links that used to point outside but now live in the suite
   const RETIRED=[/talibifinance-del\.github\.io\/richlife-money-map/i];
+  const carried={};
   saved.rooms.forEach((r,ri)=>{
     r.items.forEach(it=>{
-      if(builtin[norm(it.n)]) return;
+      const key=norm(it.n);
+      if(builtin[key]) return;
+      if(retired[key]) return;            // a rewritten task, not a task they added
+      if(carried[key]) return;            // never carry the same task twice
       const lnk=String(it.link||'');
       if(lnk && (builtinLinks[lnk.replace(/\/+$/,'')] || RETIRED.some(re=>re.test(lnk)))) return;
       const target=fresh.rooms[ri]||fresh.rooms[fresh.rooms.length-1];
-      if(target) target.items.push({id:nid(),n:it.n,link:it.link||null,linkLabel:it.linkLabel||null,d:!!it.d});
+      if(target){ carried[key]=true; target.items.push({id:nid(),n:it.n,link:it.link||null,linkLabel:it.linkLabel||null,d:!!it.d}); }
     });
   });
   // preserve which sections were collapsed
