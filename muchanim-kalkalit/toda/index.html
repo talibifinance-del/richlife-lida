@@ -18,9 +18,28 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '208911198828875');
 fbq('track', 'PageView');
-fbq('track', 'Purchase', {value: 197, currency: 'ILS'});
+/* ── אירוע "רכישה" מותנה (27.9.26) ────────────────────────────────────────────
+   קודם הדף שלח "רכישה" בכל טעינה. כל רענון, חזרה לדף, או פתיחה מחדש של הקישור
+   נספרו כמכירה נוספת, ומטא עשתה אופטימיזציה על טעינות במקום על תשלומים
+   (22-28.9.26: 7 רכישות מדווחות מול 4 עסקאות אמיתיות).
+   מעכשיו האירוע נשלח רק אם שני התנאים מתקיימים:
+     1. המבקרת הגיעה עכשיו מדף התשלום של גראו
+     2. לא נשלח כבר אירוע על אותה עסקה מהדפדפן הזה
+   זה תיקון ביניים. התיקון המלא הוא דיווח מהשרת מתוך החיווי של גראו. */
+(function () {
+  var q = new URLSearchParams(location.search);
+  var fromGrow = /grow\.link|grow\.co\.il/i.test(document.referrer || '');
+  var txn = q.get('transaction_id') || q.get('transactionId') || q.get('txn') || q.get('order_id') || '';
+  if (!fromGrow && !txn) return;                 /* רענון או כניסה ישירה - לא רכישה */
+  var key = 'rl_purchase_' + (txn || 'lida');
+  try { if (localStorage.getItem(key)) return; } catch (e) {}
+  var amount = parseFloat(q.get('amount') || q.get('sum') || '') || 197;
+  fbq('track', 'Purchase', {value: amount, currency: 'ILS'},
+      txn ? {eventID: txn} : undefined);        /* מזהה עסקה = מטא מאחדת כפילויות */
+  try { localStorage.setItem(key, '1'); } catch (e) {}
+})();
 </script>
-<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=208911198828875&ev=Purchase&noscript=1"/></noscript>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=208911198828875&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel -->
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap');
