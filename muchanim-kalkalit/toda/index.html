@@ -28,9 +28,13 @@ fbq('track', 'PageView');
    זה תיקון ביניים. התיקון המלא הוא דיווח מהשרת מתוך החיווי של גראו. */
 (function () {
   var q = new URLSearchParams(location.search);
-  var fromGrow = /grow\.link|grow\.co\.il/i.test(document.referrer || '');
+  /* 6.10.26: התנאי הקודם (רק grow.link/grow.co.il) חסם רכישה אמיתית. התשלום עצמו
+     רץ על secure.meshulam.co.il / *.grow.security, וה-success_url בגראו לא מעביר
+     פרמטרים, אז ה-referrer מגיע משם או ריק. רענון לא נספר בזכות חסימת הכפילות למטה. */
+  var ref = document.referrer || '';
+  var fromGrow = !ref || /grow\.|meshulam/i.test(ref);
   var txn = q.get('transaction_id') || q.get('transactionId') || q.get('txn') || q.get('order_id') || '';
-  if (!fromGrow && !txn) return;                 /* רענון או כניסה ישירה - לא רכישה */
+  if (!fromGrow && !txn && q.get('paid') !== '1') return;  /* הגיעו מדף אחר באתר - לא רכישה */
   var key = 'rl_purchase_' + (txn || 'lida');
   try { if (localStorage.getItem(key)) return; } catch (e) {}
   var amount = parseFloat(q.get('amount') || q.get('sum') || '') || 197;
